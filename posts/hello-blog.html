@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第一篇博客：搭建属于自己的博客 - 我的个人博客</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+<div class="container header-inner">
+<div class="logo">我的博客</div>
+<nav class="nav">
+<a href="../index.html" class="nav-link">首页</a>
+<a href="../posts.html" class="nav-link active">文章</a>
+<a href="../about.html" class="nav-link">关于</a>
+</nav>
+</div>
+</header>
+<main class="site-main">
+<section class="section">
+<div class="container">
+<article class="post-detail">
+<h1 class="post-title">第一篇博客：搭建属于自己的博客</h1>
+<div class="post-meta">2026-01-17 · 博客 · GitHub Pages</div>
+<div class="post-content">
+<p>欢迎来到我的第一篇博客文章。这是一个示例内容，你可以根据自己的想法进行修改。</p>
+<p>这个博客使用的是纯静态页面结构，不需要数据库和后端服务，非常适合部署到 GitHub Pages。</p>
+<p>如果你有很多资料要整理，可以把每一篇文章、每一个专题都写成一个独立的 HTML 页面，放到 posts 文件夹里，然后在文章列表页加上对应的链接。</p>
+</div>
+</article>
+<a href="../posts.html" class="button secondary">返回文章列表</a>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<span>© <span id="year"></span> 我的个人博客</span>
+<span>Powered by GitHub Pages</span>
+</div>
+</footer>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
+

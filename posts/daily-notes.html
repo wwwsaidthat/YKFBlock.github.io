@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>随笔示例：每日小记 - 我的个人博客</title>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<header class="site-header">
+<div class="container header-inner">
+<div class="logo">我的博客</div>
+<nav class="nav">
+<a href="../index.html" class="nav-link">首页</a>
+<a href="../posts.html" class="nav-link active">文章</a>
+<a href="../about.html" class="nav-link">关于</a>
+</nav>
+</div>
+</header>
+<main class="site-main">
+<section class="section">
+<div class="container">
+<article class="post-detail">
+<h1 class="post-title">随笔示例：每日小记</h1>
+<div class="post-meta">2026-01-10 · 随笔</div>
+<div class="post-content">
+<p>这是一篇随笔示例文章，用来展示多篇文章时博客的效果。</p>
+<p>你可以把这里当作日记、读书笔记、学习心得，按日期或主题整理成不同的页面。</p>
+<p>当你有新的内容时，只需要复制这个页面，改个文件名和标题，然后在文章列表页加一行链接即可。</p>
+</div>
+</article>
+<a href="../posts.html" class="button secondary">返回文章列表</a>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<span>© <span id="year"></span> 我的个人博客</span>
+<span>Powered by GitHub Pages</span>
+</div>
+</footer>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
+

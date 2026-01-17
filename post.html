@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>示例文章模板 - 我的个人博客</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+<div class="container header-inner">
+<div class="logo">我的博客</div>
+<nav class="nav">
+<a href="index.html" class="nav-link">首页</a>
+<a href="posts.html" class="nav-link">文章</a>
+<a href="about.html" class="nav-link">关于</a>
+</nav>
+</div>
+</header>
+<main class="site-main">
+<section class="section">
+<div class="container">
+<article class="post-detail">
+<h1 class="post-title">示例文章标题</h1>
+<div class="post-meta">2026-01-17</div>
+<div class="post-content">
+<p>这是一个示例文章模板。你可以复制这个文件，改名后放到 posts 文件夹里，然后把标题和内容替换成你自己的文章。</p>
+<p>每一篇文章都可以写成一个独立的 HTML 文件，适合存放大量资料、笔记或教程。</p>
+</div>
+</article>
+<a href="posts.html" class="button secondary">返回文章列表</a>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<span>© <span id="year"></span> 我的个人博客</span>
+<span>Powered by GitHub Pages</span>
+</div>
+</footer>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

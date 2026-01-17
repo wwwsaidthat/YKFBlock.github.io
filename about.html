@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>关于我 - 我的个人博客</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+<div class="container header-inner">
+<div class="logo">我的博客</div>
+<nav class="nav">
+<a href="index.html" class="nav-link">首页</a>
+<a href="posts.html" class="nav-link">文章</a>
+<a href="about.html" class="nav-link active">关于</a>
+</nav>
+</div>
+</header>
+<main class="site-main">
+<section class="section">
+<div class="container">
+<h1 class="section-title">关于我</h1>
+<div class="about-content">
+<p>这里写你的自我介绍，例如：</p>
+<p>你好，我是某某，热爱编程、设计和分享。这个博客主要用来记录我的学习笔记、项目经验以及生活感悟。</p>
+<p>你可以根据自己的情况修改这一段内容。</p>
+</div>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<span>© <span id="year"></span> 我的个人博客</span>
+<span>Powered by GitHub Pages</span>
+</div>
+</footer>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
+
