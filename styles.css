@@ -148,7 +148,7 @@ a:hover {
 .section-title {
   font-size: 24px;
   margin-bottom: 24px;
-  color: #1f2937; /* Gray-800 */
+  color: #db2777; /* Pink-600 */
   position: relative;
   display: inline-block;
 }
@@ -302,7 +302,15 @@ a:hover {
 .about-content p {
   margin-bottom: 16px;
   font-size: 16px;
-  color: #374151;
+  color: #db2777; /* Pink-600 */
+}
+
+.about-content h1,
+.about-content h2,
+.about-content h3 {
+  color: #db2777; /* Pink-600 */
+  margin-top: 24px;
+  margin-bottom: 16px;
 }
 
 /* Buttons */
