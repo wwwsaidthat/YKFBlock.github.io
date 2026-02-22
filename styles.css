@@ -172,19 +172,19 @@ a:hover {
 }
 
 .post-search {
-  margin: 16px auto 24px;
-  max-width: 480px;
+  margin: 32px auto 40px;
+  max-width: 640px;
   position: relative;
 }
 
 .post-search input {
   width: 100%;
-  padding: 14px 20px 14px 46px;
+  padding: 18px 24px 18px 54px;
   border-radius: 999px;
   border: 2px solid rgba(37, 99, 235, 0.7);
   background: rgba(255, 255, 255, 0.96);
   outline: none;
-  font-size: 16px;
+  font-size: 18px;
   color: #111827;
   box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
   transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
