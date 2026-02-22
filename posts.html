@@ -21,7 +21,16 @@
 <section class="section">
 <div class="container">
 <h1 class="section-title">全部文章</h1>
+<div class="post-search">
+<input id="post-search-input" type="text" placeholder="输入关键词搜索文章…">
+</div>
 <div class="post-list">
+<article class="post-item">
+<a class="post-title-link" href="pdf-viewer.html?file=posts/%E5%8D%97%E6%98%9F%E6%A2%A6%E6%83%B3%E8%AE%A1%E5%88%92%E6%80%BB%E7%BB%932026.pdf">南星梦想计划总结2026</a>
+<div class="post-meta">2026-02-22</div>
+<p class="post-excerpt">南星梦想计划项目的个人总结与收获记录。</p>
+</article>
+
 <article class="post-item">
 <a class="post-title-link" href="markdown-viewer.html?file=posts/git%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E5%92%8C%E8%BF%9C%E7%AB%AF%E5%88%86%E6%94%AF%E7%9A%84%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB.md">git本地分支和远端分支的对应关系</a>
 <div class="post-meta">2026-02-08</div>
@@ -166,6 +175,30 @@
 </footer>
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
+var searchInput = document.getElementById("post-search-input");
+if (searchInput) {
+  searchInput.addEventListener("input", function () {
+    var keyword = searchInput.value.trim().toLowerCase();
+    var items = document.querySelectorAll(".post-item");
+    items.forEach(function (item) {
+      var titleEl = item.querySelector(".post-title-link");
+      var excerptEl = item.querySelector(".post-excerpt");
+      var text = "";
+      if (titleEl) {
+        text += titleEl.textContent || "";
+      }
+      if (excerptEl) {
+        text += " " + (excerptEl.textContent || "");
+      }
+      text = text.toLowerCase();
+      if (!keyword || text.indexOf(keyword) !== -1) {
+        item.style.display = "";
+      } else {
+        item.style.display = "none";
+      }
+    });
+  });
+}
 </script>
 </body>
 </html>
