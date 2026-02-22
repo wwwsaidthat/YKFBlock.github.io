@@ -172,32 +172,33 @@ a:hover {
 }
 
 .post-search {
-  margin: 8px 0 20px;
-  max-width: 360px;
+  margin: 16px auto 24px;
+  max-width: 480px;
   position: relative;
 }
 
 .post-search input {
   width: 100%;
-  padding: 10px 16px 10px 38px;
+  padding: 14px 20px 14px 46px;
   border-radius: 999px;
-  border: 1px solid rgba(219, 39, 119, 0.4);
-  background: linear-gradient(to right, rgba(255, 255, 255, 0.95), rgba(255, 240, 246, 0.95));
+  border: 2px solid rgba(37, 99, 235, 0.7);
+  background: rgba(255, 255, 255, 0.96);
   outline: none;
-  font-size: 14px;
-  color: #374151;
-  box-shadow: 0 2px 10px rgba(219, 39, 119, 0.18);
-  transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  font-size: 16px;
+  color: #111827;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.18);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
 }
 
 .post-search input::placeholder {
-  color: #9ca3af;
+  color: #6b7280;
 }
 
 .post-search input:focus {
-  border-color: #db2777;
-  box-shadow: 0 4px 18px rgba(219, 39, 119, 0.28);
+  border-color: #1d4ed8;
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
   background: rgba(255, 255, 255, 0.98);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .post-search::before {
@@ -207,7 +208,7 @@ a:hover {
   top: 50%;
   transform: translateY(-50%);
   font-size: 14px;
-  color: #db2777;
+  color: #1d4ed8;
   pointer-events: none;
 }
 
