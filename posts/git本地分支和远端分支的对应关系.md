@@ -71,3 +71,5 @@
                3. 点击 **Confirm merge**，GitHub 会自动把 `feature/login` 合并到 `main` 分支；
 
 4. github desktop上面的功能可以直接通过按钮点击的方式实现，你每次clone下来进行修改之后会自动检测变更，把变更提交到本地仓库，你点push origin自己就帮你交上去了很方便的！！！
+
+   1. 2026.3.2惊喜的发现GitHub destop也适用于gitlab 很强大的软件！
