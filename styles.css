@@ -13,6 +13,9 @@ body {
   background-repeat: no-repeat;
   color: #374151; /* Gray-700 */
   line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -85,6 +88,7 @@ a:hover {
 .site-main {
   padding-top: 24px;
   padding-bottom: 60px;
+  flex: 1 0 auto;
 }
 
 /* Hero Section */
@@ -403,6 +407,7 @@ a:hover {
   padding: 24px 0 32px;
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
+  margin-top: auto;
 }
 
 .footer-inner {
