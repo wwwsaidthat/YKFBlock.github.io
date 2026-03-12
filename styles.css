@@ -410,6 +410,18 @@ a:hover {
   margin-top: auto;
 }
 
+.home .site-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+}
+
+.home .site-main {
+  padding-bottom: 140px;
+}
+
 .footer-inner {
   display: flex;
   justify-content: space-between;
