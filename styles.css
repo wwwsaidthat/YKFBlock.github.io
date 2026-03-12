@@ -340,6 +340,14 @@ a:hover {
 }
 
 /* About Page */
+.about-content {
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
 .about-content p {
   margin-bottom: 16px;
   font-size: 16px;
