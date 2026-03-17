@@ -175,6 +175,52 @@ a:hover {
   gap: 20px;
 }
 
+.post-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.post-group {
+  background: rgba(255, 255, 255, 0.55);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+}
+
+.post-group > summary {
+  cursor: pointer;
+  padding: 16px 20px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #be185d;
+  user-select: none;
+}
+
+.post-group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.post-group > summary::after {
+  content: "▾";
+  float: right;
+  color: rgba(190, 24, 93, 0.7);
+}
+
+.post-group[open] > summary::after {
+  content: "▴";
+}
+
+.post-group .post-list {
+  padding: 0 20px 20px;
+}
+
+.post-group .post-item {
+  background: rgba(255, 255, 255, 0.75);
+}
+
 .post-search {
   margin: 32px auto 40px;
   max-width: 640px;

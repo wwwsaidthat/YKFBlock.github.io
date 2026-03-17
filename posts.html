@@ -24,14 +24,44 @@
 <div class="post-search">
 <input id="post-search-input" type="text" placeholder="输入关键词搜索文章…">
 </div>
-<div class="post-list">
+<div id="post-groups" class="post-groups">
+  <details class="post-group" open>
+    <summary>操作系统</summary>
+    <div class="post-list" data-category-list="os"></div>
+  </details>
+  <details class="post-group" open>
+    <summary>软件设计</summary>
+    <div class="post-list" data-category-list="software-design"></div>
+  </details>
+  <details class="post-group" open>
+    <summary>Leetcode</summary>
+    <div class="post-list" data-category-list="leetcode"></div>
+  </details>
+  <details class="post-group" open>
+    <summary>蓝桥杯</summary>
+    <div class="post-list" data-category-list="lanqiao"></div>
+  </details>
+  <details class="post-group" open>
+    <summary>C++</summary>
+    <div class="post-list" data-category-list="cpp"></div>
+  </details>
+  <details class="post-group" open>
+    <summary>课程复习</summary>
+    <div class="post-list" data-category-list="courses"></div>
+  </details>
+  <details class="post-group" open>
+    <summary>其他</summary>
+    <div class="post-list" data-category-list="others"></div>
+  </details>
+</div>
+<div class="post-list" id="post-list-source" style="display:none;">
   <article class="post-item">
     <a class="post-title-link" href="markdown-viewer.html?file=posts/批评与自我批评.md">批评与自我批评</a>
     <div class="post-meta">2026-03-16</div>
     <p class="post-excerpt">组织生活会发言：自我批评与对支部工作的意见建议，下次增加对支部同志的批评</p>
   </article>
   <article class="post-item">
-    <a class="post-title-link" href="markdown-viewer.html?file=posts/蓝桥杯备赛专题3_数学专题.md">蓝桥杯备赛专题3：数学专题</a>
+    <a class="post-title-link" href="markdown-viewer.html?file=posts/蓝桥杯备赛3_数学专题.md">蓝桥杯备赛3：数学专题</a>
     <div class="post-meta">2026-03-16</div>
     <p class="post-excerpt">快速幂、GCD/LCM、排列组合与欧拉筛模板整理。</p>
   </article>
@@ -392,6 +422,58 @@
 </footer>
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
+function normalizeText(text) {
+  return (text || "").toLowerCase();
+}
+function guessCategoryKey(item) {
+  var titleEl = item.querySelector(".post-title-link");
+  var href = titleEl ? (titleEl.getAttribute("href") || "") : "";
+  var title = titleEl ? (titleEl.textContent || "") : "";
+  var raw = normalizeText(title + " " + href);
+
+  if (raw.indexOf("posts/os_") !== -1 || title.indexOf("OS") === 0 || title.indexOf("操作系统") !== -1) return "os";
+  if (raw.indexOf("软件设计") !== -1) return "software-design";
+  if (raw.indexOf("leetcode") !== -1) return "leetcode";
+  if (raw.indexOf("蓝桥杯") !== -1) return "lanqiao";
+  if (raw.indexOf("cpp") === 0 || raw.indexOf("c++") !== -1 || title.indexOf("CPP") === 0) return "cpp";
+  if (raw.indexOf("人机交互") !== -1 || raw.indexOf("离散数学") !== -1 || raw.indexOf("软件测试") !== -1 || raw.indexOf("数理逻辑") !== -1 || raw.indexOf("软工") !== -1) return "courses";
+  return "others";
+}
+function groupPosts() {
+  var source = document.getElementById("post-list-source");
+  if (!source) return;
+  var items = Array.prototype.slice.call(source.querySelectorAll(".post-item"));
+  items.forEach(function (item) {
+    var key = guessCategoryKey(item);
+    var list = document.querySelector('[data-category-list="' + key + '"]');
+    if (!list) {
+      list = document.querySelector('[data-category-list="others"]');
+    }
+    if (list) {
+      list.appendChild(item);
+    }
+  });
+}
+function updateGroupVisibility(keyword) {
+  var groups = document.querySelectorAll(".post-group");
+  groups.forEach(function (group) {
+    var visibleCount = 0;
+    var items = group.querySelectorAll(".post-item");
+    items.forEach(function (item) {
+      if (item.style.display !== "none") visibleCount++;
+    });
+    if (visibleCount === 0) {
+      group.style.display = "none";
+    } else {
+      group.style.display = "";
+    }
+    if (keyword) {
+      group.open = true;
+    }
+  });
+}
+
+groupPosts();
 var searchInput = document.getElementById("post-search-input");
 if (searchInput) {
   searchInput.addEventListener("input", function () {
@@ -414,7 +496,9 @@ if (searchInput) {
         item.style.display = "none";
       }
     });
+    updateGroupVisibility(keyword);
   });
+  updateGroupVisibility("");
 }
 </script>
 </body>
