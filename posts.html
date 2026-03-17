@@ -521,6 +521,25 @@ function groupPosts() {
     }
   });
 }
+function sortPostsInGroups() {
+  var collator = new Intl.Collator("zh-CN", { numeric: true, sensitivity: "base" });
+  var lists = document.querySelectorAll("[data-category-list]");
+  lists.forEach(function (list) {
+    var items = Array.prototype.slice.call(list.querySelectorAll(".post-item"));
+    items.sort(function (a, b) {
+      var ta = "";
+      var tb = "";
+      var aTitle = a.querySelector(".post-title-link");
+      var bTitle = b.querySelector(".post-title-link");
+      if (aTitle) ta = aTitle.textContent || "";
+      if (bTitle) tb = bTitle.textContent || "";
+      return collator.compare(ta, tb);
+    });
+    items.forEach(function (item) {
+      list.appendChild(item);
+    });
+  });
+}
 function updateGroupVisibility(keyword) {
   var groups = document.querySelectorAll(".post-group");
   groups.forEach(function (group) {
@@ -541,6 +560,7 @@ function updateGroupVisibility(keyword) {
 }
 
 groupPosts();
+sortPostsInGroups();
 var searchInput = document.getElementById("post-search-input");
 if (searchInput) {
   searchInput.addEventListener("input", function () {
