@@ -425,6 +425,52 @@ document.getElementById("year").textContent = new Date().getFullYear();
 function normalizeText(text) {
   return (text || "").toLowerCase();
 }
+function encodePath(path) {
+  return (path || "").split("/").map(function (seg) {
+    return encodeURIComponent(seg);
+  }).join("/");
+}
+function getFileParamFromHref(href) {
+  if (!href) return "";
+  try {
+    var url = new URL(href, window.location.href);
+    return url.searchParams.get("file") || "";
+  } catch (e) {
+    var idx = href.indexOf("file=");
+    if (idx === -1) return "";
+    return href.slice(idx + 5);
+  }
+}
+function getBaseName(filePath) {
+  try {
+    var decoded = decodeURIComponent(filePath);
+    return decoded.split("/").pop() || "";
+  } catch (e) {
+    return (filePath || "").split("/").pop() || "";
+  }
+}
+function getCategoryFolder(key) {
+  if (key === "os") return "os";
+  if (key === "software-design") return "software-design";
+  if (key === "leetcode") return "leetcode";
+  if (key === "lanqiao") return "lanqiao";
+  if (key === "cpp") return "cpp";
+  if (key === "courses") return "courses";
+  return "others";
+}
+function rewritePostLink(item, categoryKey) {
+  var a = item.querySelector(".post-title-link");
+  if (!a) return;
+  var href = a.getAttribute("href") || "";
+  var fileParam = getFileParamFromHref(href);
+  if (!fileParam) return;
+  var basePage = href.split("?")[0] || "";
+  var baseName = getBaseName(fileParam);
+  if (!baseName) return;
+  var folder = getCategoryFolder(categoryKey);
+  var newFile = "posts/" + folder + "/" + baseName;
+  a.setAttribute("href", basePage + "?file=" + encodePath(newFile));
+}
 function guessCategoryKey(item) {
   var titleEl = item.querySelector(".post-title-link");
   var href = titleEl ? (titleEl.getAttribute("href") || "") : "";
@@ -445,6 +491,7 @@ function groupPosts() {
   var items = Array.prototype.slice.call(source.querySelectorAll(".post-item"));
   items.forEach(function (item) {
     var key = guessCategoryKey(item);
+    rewritePostLink(item, key);
     var list = document.querySelector('[data-category-list="' + key + '"]');
     if (!list) {
       list = document.querySelector('[data-category-list="others"]');
