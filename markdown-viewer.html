@@ -6,6 +6,9 @@
 <title>Markdown 文档展示 - 我的个人博客</title>
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 </head>
 <body>
 <header class="site-header">
@@ -64,6 +67,17 @@ function initMarkdownViewer() {
   }).then(function(text) {
     var container = document.getElementById("markdown-content");
     container.innerHTML = marked.parse(text);
+    if (window.renderMathInElement) {
+      window.renderMathInElement(container, {
+        delimiters: [
+          { left: "$$", right: "$$", display: true },
+          { left: "\\[", right: "\\]", display: true },
+          { left: "$", right: "$", display: false },
+          { left: "\\(", right: "\\)", display: false }
+        ],
+        ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      });
+    }
   }).catch(function() {
     showMessage("加载文档失败，请检查文件路径是否正确，以及文件是否已经上传到仓库。");
   });
