@@ -376,7 +376,7 @@
 <article class="post-item">
 <a class="post-title-link" href="markdown-viewer.html?file=posts/others/%E6%9D%9C%E6%AC%A3%E5%B0%A7%E5%9F%BA%E6%9C%AC%E6%83%85%E5%86%B5%E4%BB%8B%E7%BB%8D.md">杜欣尧基本情况介绍</a>
 <div class="post-meta">2026-03-24</div>
-<p class="post-excerpt">大一上学期：学业表现、综合评价与志愿服务等信息汇总。</p>
+<p class="post-excerpt">dxy大一上学期：学业表现、综合评价与志愿服务等信息汇总。</p>
 </article>
 
 <article class="post-item">
@@ -470,6 +470,48 @@
 </article>
 
 <article class="post-item">
+<a class="post-title-link" href="markdown-viewer.html?file=posts/courses/%E8%AE%A1%E7%AE%97%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%EF%BC%88%E6%8C%89%E7%85%A7%E9%A2%98%E5%9E%8B%E8%BF%9B%E8%A1%8C%EF%BC%89.md">计算系统基础期末复习（按题型）</a>
+<div class="post-meta">2026-03-24</div>
+<p class="post-excerpt">按题型整理：数据表示、逻辑与补码、浮点数、冯诺依曼、C转汇编与 DLX 数据通路。</p>
+</article>
+
+<article class="post-item">
+<a class="post-title-link" href="markdown-viewer.html?file=posts/courses/%E8%AE%A1%E7%AE%97%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0%28%E6%8C%89%E7%85%A7%E7%AB%A0%E8%8A%82%E8%BF%9B%E8%A1%8C%EF%BC%89.md">计算系统基础期末复习（按章节）</a>
+<div class="post-meta">2026-03-24</div>
+<p class="post-excerpt">按章节整理：机器级数据表示、整数补码、数制转换与 DLX 相关知识点。</p>
+</article>
+
+<article class="post-item">
+<a class="post-title-link" href="markdown-viewer.html?file=posts/courses/%E5%BE%AE%E7%A7%AF%E5%88%86I%E5%A4%8D%E4%B9%A0.md">微积分I复习</a>
+<div class="post-meta">2026-03-24</div>
+<p class="post-excerpt">期中复习：泰勒展开、极限存在、积分技巧与证明题策略。</p>
+</article>
+
+<article class="post-item">
+<a class="post-title-link" href="pdf-viewer.html?file=posts/compile/recap1.pdf">编译原理复习1</a>
+<div class="post-meta">2026-03-24</div>
+<p class="post-excerpt">编译原理复习资料：recap1。</p>
+</article>
+
+<article class="post-item">
+<a class="post-title-link" href="pdf-viewer.html?file=posts/compile/recap2.pdf">编译原理复习2</a>
+<div class="post-meta">2026-03-24</div>
+<p class="post-excerpt">编译原理复习资料：recap2。</p>
+</article>
+
+<article class="post-item">
+<a class="post-title-link" href="pdf-viewer.html?file=posts/compile/recap3.pdf">编译原理复习3</a>
+<div class="post-meta">2026-03-24</div>
+<p class="post-excerpt">编译原理复习资料：recap3。</p>
+</article>
+
+<article class="post-item">
+<a class="post-title-link" href="pdf-viewer.html?file=posts/compile/%E5%AE%9A%E4%B9%89%E9%A2%98%E7%9B%AE.pdf">编译原理：定义题目</a>
+<div class="post-meta">2026-03-24</div>
+<p class="post-excerpt">编译原理复习资料：定义题目。</p>
+</article>
+
+<article class="post-item">
 <a class="post-title-link" href="markdown-viewer.html?file=posts/others/%E5%89%8D%E5%90%8E%E7%AB%AF%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E6%8E%A2%E7%A9%B6.md">前后端代码实现探究</a>
 <div class="post-meta">2026-01-20</div>
 <p class="post-excerpt">探究前端 fetch 与后端 SpringBoot Controller、Service、Repository 的交互实现逻辑。</p>
@@ -533,6 +575,8 @@ function getCategoryFolder(key) {
   if (key === "lanqiao") return "lanqiao";
   if (key === "cpp") return "cpp";
   if (key === "courses") return "courses";
+  if (key === "compile") return "compile";
+  if (key === "bigDataAnalysis") return "bigDataAnalysis";
   return "others";
 }
 function rewritePostLink(item, categoryKey) {
@@ -541,6 +585,12 @@ function rewritePostLink(item, categoryKey) {
   var href = a.getAttribute("href") || "";
   var fileParam = getFileParamFromHref(href);
   if (!fileParam) return;
+  try {
+    var decoded = decodeURIComponent(fileParam);
+    if (decoded.indexOf("posts/") === 0 && decoded.split("/").length >= 3) {
+      return;
+    }
+  } catch (e) {}
   var basePage = href.split("?")[0] || "";
   var baseName = getBaseName(fileParam);
   if (!baseName) return;
@@ -552,6 +602,25 @@ function guessCategoryKey(item) {
   var titleEl = item.querySelector(".post-title-link");
   var href = titleEl ? (titleEl.getAttribute("href") || "") : "";
   var title = titleEl ? (titleEl.textContent || "") : "";
+  var fileParam = getFileParamFromHref(href);
+  if (fileParam) {
+    try {
+      var decoded = decodeURIComponent(fileParam);
+      var parts = decoded.split("/");
+      if (parts.length >= 3 && parts[0] === "posts") {
+        var folder = parts[1] || "";
+        if (folder === "os") return "os";
+        if (folder === "software-design") return "software-design";
+        if (folder === "leetcode") return "leetcode";
+        if (folder === "lanqiao") return "lanqiao";
+        if (folder === "cpp") return "cpp";
+        if (folder === "courses") return "courses";
+        if (folder === "compile") return "courses";
+        if (folder === "bigDataAnalysis") return "courses";
+        if (folder === "others") return "others";
+      }
+    } catch (e) {}
+  }
   var raw = normalizeText(title + " " + href);
 
   if (raw.indexOf("posts/os_") !== -1 || title.indexOf("OS") === 0 || title.indexOf("操作系统") !== -1) return "os";
@@ -559,7 +628,7 @@ function guessCategoryKey(item) {
   if (raw.indexOf("leetcode") !== -1) return "leetcode";
   if (raw.indexOf("蓝桥杯") !== -1) return "lanqiao";
   if (raw.indexOf("cpp") === 0 || raw.indexOf("c++") !== -1 || title.indexOf("CPP") === 0) return "cpp";
-  if (raw.indexOf("人机交互") !== -1 || raw.indexOf("离散数学") !== -1 || raw.indexOf("软件测试") !== -1 || raw.indexOf("数理逻辑") !== -1 || raw.indexOf("软工") !== -1) return "courses";
+  if (raw.indexOf("人机交互") !== -1 || raw.indexOf("离散数学") !== -1 || raw.indexOf("软件测试") !== -1 || raw.indexOf("数理逻辑") !== -1 || raw.indexOf("软工") !== -1 || raw.indexOf("微积分") !== -1 || raw.indexOf("计算系统基础") !== -1 || raw.indexOf("编译") !== -1) return "courses";
   return "others";
 }
 function groupPosts() {
