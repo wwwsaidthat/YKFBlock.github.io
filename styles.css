@@ -192,11 +192,21 @@ a:hover {
 
 .post-group > summary {
   cursor: pointer;
-  padding: 16px 20px;
-  font-size: 18px;
+  padding: 18px 22px;
+  font-size: 19px;
   font-weight: 700;
   color: #be185d;
   user-select: none;
+}
+
+.post-group .post-group {
+  margin-top: 12px;
+}
+
+.post-group .post-group > summary {
+  padding: 20px 24px;
+  font-size: 18px;
+  line-height: 1.45;
 }
 
 .post-group > summary::-webkit-details-marker {

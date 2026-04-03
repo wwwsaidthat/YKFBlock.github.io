@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java 代码展示 - 我的个人博客</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/github.min.css">
+<style>
+  .code-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .code-file {
+    font-size: 14px;
+    color: #6b7280;
+    word-break: break-all;
+  }
+  pre code {
+    display: block;
+    padding: 16px;
+    border-radius: 12px;
+    overflow: auto;
+  }
+  .button-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .button.small {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  .status-text {
+    color: #6b7280;
+    font-size: 14px;
+  }
+  .code-container {
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 24px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
+  }
+  @media (prefers-color-scheme: dark) {
+    pre code {
+      background: rgba(17, 24, 39, 0.8);
+    }
+  }
+  @media (prefers-color-scheme: light) {
+    pre code {
+      background: #f8fafc;
+    }
+  }
+  @media (max-width: 640px) {
+    .code-toolbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/common.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/languages/java.min.js"></script>
+</head>
+<body>
+<header class="site-header">
+<div class="container header-inner">
+<div class="logo">我的博客</div>
+<nav class="nav">
+<a href="index.html" class="nav-link">首页</a>
+<a href="posts.html" class="nav-link">文章</a>
+<a href="about.html" class="nav-link">关于</a>
+</nav>
+</div>
+</header>
+<main class="site-main">
+<section class="section">
+<div class="container">
+<article class="post-detail">
+<h1 class="post-title">Java 代码展示</h1>
+<div class="code-toolbar">
+  <div class="code-file" id="code-file-name"></div>
+  <div class="button-row">
+    <a class="button small secondary" id="open-raw" href="#" target="_blank" rel="noopener noreferrer">打开原文件</a>
+    <button class="button small secondary" id="copy-btn" type="button">复制代码</button>
+  </div>
+</div>
+<div class="code-container">
+  <div class="status-text" id="status-text"></div>
+  <pre><code id="code-block" class="language-java"></code></pre>
+</div>
+</article>
+<a href="posts.html" class="button secondary">返回文章列表</a>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<span>© <span id="year"></span> 我的个人博客</span>
+<span>Powered by GitHub Pages</span>
+</div>
+</footer>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+function getFileFromQuery() {
+  var params = new URLSearchParams(window.location.search);
+  return params.get("file");
+}
+function setStatus(text) {
+  var el = document.getElementById("status-text");
+  el.textContent = text || "";
+}
+function init() {
+  var file = getFileFromQuery();
+  var nameEl = document.getElementById("code-file-name");
+  var codeEl = document.getElementById("code-block");
+  var openRaw = document.getElementById("open-raw");
+  var copyBtn = document.getElementById("copy-btn");
+  if (!file) {
+    nameEl.textContent = "未指定文件";
+    setStatus("请在链接后添加 ?file=posts/路径/文件.java 来指定要展示的代码文件。");
+    openRaw.setAttribute("href", "posts.html");
+    copyBtn.disabled = true;
+    return;
+  }
+  nameEl.textContent = file;
+  openRaw.setAttribute("href", file);
+  setStatus("正在加载代码...");
+  fetch(file).then(function (response) {
+    if (!response.ok) throw new Error("load failed");
+    return response.text();
+  }).then(function (text) {
+    setStatus("");
+    codeEl.textContent = text;
+    if (window.hljs) {
+      try {
+        window.hljs.highlightElement(codeEl);
+      } catch (e) {}
+    }
+    copyBtn.disabled = false;
+  }).catch(function () {
+    setStatus("加载失败，请检查文件路径是否正确，以及文件是否已上传到仓库。");
+    copyBtn.disabled = true;
+  });
+  copyBtn.addEventListener("click", function () {
+    var code = codeEl.textContent || "";
+    if (!code) return;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(function () {
+        setStatus("已复制到剪贴板");
+        setTimeout(function () { setStatus(""); }, 1200);
+      }).catch(function () {});
+      return;
+    }
+    var ta = document.createElement("textarea");
+    ta.value = code;
+    ta.style.position = "fixed";
+    ta.style.left = "-9999px";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+    setStatus("已复制到剪贴板");
+    setTimeout(function () { setStatus(""); }, 1200);
+  });
+}
+init();
+</script>
+</body>
+</html>
