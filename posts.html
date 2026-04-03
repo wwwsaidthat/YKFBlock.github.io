@@ -921,6 +921,7 @@ function ensureSoftwareDesignCourseList(courseKey) {
     if (!existingList) {
       var details = document.createElement("details");
       details.className = "post-group";
+      details.open = true;
       var summary = document.createElement("summary");
       summary.textContent = seg;
       details.appendChild(summary);
