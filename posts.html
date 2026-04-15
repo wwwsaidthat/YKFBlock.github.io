@@ -375,24 +375,34 @@
     <p class="post-excerpt">树状数组与单调栈笔记：lowbit、单点更新/前缀和查询，并用树状数组求“相邻交换代价最小”问题。</p>
   </article>
   <article class="post-item">
-    <a class="post-title-link" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/001-Attention%20is%20all%20you%20need/001-Attention%20Is%20All%20You%20Need.pdf">Attention Is All You Need（论文原文）</a>
+    <a class="post-title-link" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/001-Attention%20is%20all%20you%20need/001-Attention%20Is%20All%20You%20Need.pdf">001 Attention Is All You Need（论文原文）</a>
     <div class="post-meta">2026-03-27</div>
     <p class="post-excerpt">Transformer 原论文 PDF（Attention Is All You Need）。</p>
   </article>
   <article class="post-item">
-    <a class="post-title-link" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/001-Attention%20is%20all%20you%20need/001%E6%95%B4%E7%90%86.pdf">Attention Is All You Need（整理）</a>
+    <a class="post-title-link" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/001-Attention%20is%20all%20you%20need/001%E6%95%B4%E7%90%86.pdf">001 Attention Is All You Need（整理）</a>
     <div class="post-meta">2026-03-27</div>
     <p class="post-excerpt">Transformer 论文阅读整理笔记 PDF。</p>
   </article>
   <article class="post-item">
-    <a class="post-title-link" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/002-BERT/002-BERT-%20Pre-training%20of%20Deep%20Bidirectional%20Transformers%20for%20Language%20Understanding.pdf">BERT（论文原文）</a>
+    <a class="post-title-link" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/002-BERT/002-BERT-%20Pre-training%20of%20Deep%20Bidirectional%20Transformers%20for%20Language%20Understanding.pdf">002 BERT（论文原文）</a>
     <div class="post-meta">2026-04-04</div>
     <p class="post-excerpt">BERT 原论文 PDF：Pre-training of Deep Bidirectional Transformers for Language Understanding。</p>
   </article>
   <article class="post-item">
-    <a class="post-title-link" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/002-BERT/002%E6%95%B4%E7%90%86.pdf">BERT（整理）</a>
+    <a class="post-title-link" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/002-BERT/002%E6%95%B4%E7%90%86.pdf">002 BERT（整理）</a>
     <div class="post-meta">2026-04-04</div>
     <p class="post-excerpt">BERT 论文阅读整理笔记 PDF。</p>
+  </article>
+  <article class="post-item">
+    <a class="post-title-link" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/007-MRL/007-Matryoshka%20Representation%20Learning.pdf">007 Matryoshka Representation Learning（论文原文）</a>
+    <div class="post-meta">2026-04-04</div>
+    <p class="post-excerpt">MRL 原论文 PDF：Matryoshka Representation Learning。</p>
+  </article>
+  <article class="post-item">
+    <a class="post-title-link" href="markdown-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/007-MRL/007%E6%95%B4%E7%90%86.md">007 Matryoshka Representation Learning（整理）</a>
+    <div class="post-meta">2026-04-04</div>
+    <p class="post-excerpt">MRL 论文阅读整理笔记。</p>
   </article>
   <article class="post-item">
     <a class="post-title-link" href="markdown-viewer.html?file=posts/编程题目/Leetcode%20%E9%A2%98%E7%9B%AE%20%E9%A2%9C%E8%89%B2%E5%88%86%E7%B1%BB.md">Leetcode 题目 颜色分类</a>
@@ -1008,6 +1018,25 @@ function sortPostsInGroups() {
   lists.forEach(function (list) {
     var items = Array.prototype.slice.call(list.querySelectorAll(".post-item"));
     items.sort(function (a, b) {
+      var researchKey = list.getAttribute("data-research-list") || "";
+      if (researchKey === "论文阅读") {
+        var at = a.querySelector(".post-title-link");
+        var bt = b.querySelector(".post-title-link");
+        var as = at ? (at.textContent || "").trim() : "";
+        var bs = bt ? (bt.textContent || "").trim() : "";
+        var am = as.match(/^(\d{3})\b/);
+        var bm = bs.match(/^(\d{3})\b/);
+        if (am && bm) {
+          var an = parseInt(am[1], 10);
+          var bn = parseInt(bm[1], 10);
+          if (an !== bn) return an - bn;
+        } else if (am && !bm) {
+          return -1;
+        } else if (!am && bm) {
+          return 1;
+        }
+        return collator.compare(as, bs);
+      }
       var da = "";
       var db = "";
       var aDate = a.querySelector(".post-meta");
