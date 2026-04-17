@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>图片展示 - 我的个人博客</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .image-meta {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 12px;
+    word-break: break-all;
+  }
+  .image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 16px;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
+  }
+  .image-wrapper img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 16px;
+  }
+  .button-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+  .button.small {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  .status-text {
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+<div class="container header-inner">
+<div class="logo">我的博客</div>
+<nav class="nav">
+<a href="index.html" class="nav-link">首页</a>
+<a href="posts.html" class="nav-link">文章</a>
+<a href="about.html" class="nav-link">关于</a>
+</nav>
+</div>
+</header>
+<main class="site-main">
+<section class="section">
+<div class="container">
+<article class="post-detail">
+<h1 class="post-title" id="image-title">图片展示</h1>
+<div class="image-meta" id="image-file-name"></div>
+<div class="button-row">
+  <a class="button small secondary" id="open-raw" href="#" target="_blank" rel="noopener noreferrer">打开原文件</a>
+  <a class="button small secondary" id="download" href="#" download>下载</a>
+</div>
+<div class="status-text" id="status-text"></div>
+<div class="image-wrapper" id="image-wrapper"></div>
+</article>
+<a href="posts.html" class="button secondary">返回文章列表</a>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<span>© <span id="year"></span> 我的个人博客</span>
+<span>Powered by GitHub Pages</span>
+</div>
+</footer>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+function getFileFromQuery() {
+  var params = new URLSearchParams(window.location.search);
+  return params.get("file");
+}
+function setStatus(text) {
+  var el = document.getElementById("status-text");
+  el.textContent = text || "";
+}
+function init() {
+  var file = getFileFromQuery();
+  var nameEl = document.getElementById("image-file-name");
+  var titleEl = document.getElementById("image-title");
+  var wrapper = document.getElementById("image-wrapper");
+  var openRaw = document.getElementById("open-raw");
+  var download = document.getElementById("download");
+  if (!file) {
+    nameEl.textContent = "未指定文件";
+    setStatus("请在链接后添加 ?file=posts/路径/图片.png 来指定要展示的图片文件。");
+    openRaw.setAttribute("href", "posts.html");
+    download.setAttribute("href", "posts.html");
+    return;
+  }
+  var decoded = file;
+  try { decoded = decodeURIComponent(file); } catch (e) {}
+  var filename = decoded.split("/").pop() || decoded;
+  titleEl.textContent = filename;
+  nameEl.textContent = "文件路径: " + decoded;
+  openRaw.setAttribute("href", file);
+  download.setAttribute("href", file);
+  var img = document.createElement("img");
+  img.alt = filename;
+  img.src = file;
+  img.addEventListener("load", function () {
+    setStatus("");
+  });
+  img.addEventListener("error", function () {
+    setStatus("加载失败，请检查文件路径是否正确，以及文件是否已上传到仓库。");
+  });
+  wrapper.innerHTML = "";
+  setStatus("正在加载图片...");
+  wrapper.appendChild(img);
+}
+init();
+</script>
+</body>
+</html>
