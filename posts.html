@@ -1129,6 +1129,34 @@ function sortPostsInGroups() {
     });
   });
 }
+function getLeadingNumber(text) {
+  var m = (text || "").trim().match(/^(\d+)/);
+  return m ? parseInt(m[1], 10) : Number.MAX_SAFE_INTEGER;
+}
+function sortSoftwareDesignGroups(tree) {
+  if (!tree) return;
+  var collator = new Intl.Collator("zh-CN", { numeric: true, sensitivity: "base" });
+  var groups = Array.prototype.slice.call(tree.children).filter(function (node) {
+    return node.classList && node.classList.contains("post-group");
+  });
+  groups.sort(function (a, b) {
+    var as = "";
+    var bs = "";
+    var aSummary = a.querySelector("summary");
+    var bSummary = b.querySelector("summary");
+    if (aSummary) as = aSummary.textContent || "";
+    if (bSummary) bs = bSummary.textContent || "";
+    var an = getLeadingNumber(as);
+    var bn = getLeadingNumber(bs);
+    if (an !== bn) return an - bn;
+    return collator.compare(as, bs);
+  });
+  groups.forEach(function (group) {
+    tree.appendChild(group);
+    var childTree = group.querySelector("[data-course-tree]");
+    if (childTree) sortSoftwareDesignGroups(childTree);
+  });
+}
 function updateGroupVisibility(keyword) {
   var groups = document.querySelectorAll(".post-group");
   groups.forEach(function (group) {
@@ -1149,6 +1177,7 @@ function updateGroupVisibility(keyword) {
 }
 
 groupPosts();
+sortSoftwareDesignGroups(getCourseTreeContainer("software-design"));
 sortPostsInGroups();
 var searchInput = document.getElementById("post-search-input");
 if (searchInput) {
