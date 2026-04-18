@@ -25,11 +25,11 @@
 <input id="post-search-input" type="text" placeholder="输入关键词搜索文章…">
 </div>
 <div id="post-groups" class="post-groups">
-  <details class="post-group" open>
+  <details class="post-group">
     <summary>编程题目</summary>
     <div class="post-list" data-category-list="programming"></div>
   </details>
-  <details class="post-group" open>
+  <details class="post-group">
     <summary>课程复习</summary>
     <details class="post-group">
       <summary>编译原理</summary>
@@ -86,7 +86,7 @@
       <div class="post-list" data-course-list="数据集成"></div>
     </details>
   </details>
-  <details class="post-group" open>
+  <details class="post-group">
     <summary>科研</summary>
     <div class="post-list" data-category-list="research"></div>
     <details class="post-group">
@@ -98,7 +98,7 @@
       <div class="post-list" data-research-list="总结&思考"></div>
     </details>
   </details>
-  <details class="post-group" open>
+  <details class="post-group">
     <summary>其他</summary>
     <div class="post-list" data-category-list="others"></div>
   </details>
@@ -1041,7 +1041,7 @@ function ensureSoftwareDesignCourseList(courseKey) {
     if (!existingList) {
       var details = document.createElement("details");
       details.className = "post-group";
-      details.open = true;
+      details.open = false;
       var summary = document.createElement("summary");
       summary.textContent = seg;
       details.appendChild(summary);
