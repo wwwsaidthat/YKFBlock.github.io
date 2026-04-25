@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计模式C++试卷（C卷+D卷）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        body {
+            padding: 30px;
+            background-color: #f9f9f9;
+            line-height: 1.7;
+        }
+        .paper-box {
+            background: white;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        h2 {
+            color: #2980b9;
+            margin: 20px 0 15px;
+            font-size: 20px;
+            border-left: 4px solid #2980b9;
+            padding-left: 10px;
+        }
+        h3 {
+            color: #34495e;
+            margin: 15px 0 10px;
+            font-size: 16px;
+        }
+        .title-info {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 15px;
+            color: #666;
+        }
+        .question {
+            margin: 12px 0;
+            padding-left: 10px;
+        }
+        .code-block {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+            white-space: pre;
+        }
+        .class-diagram {
+            font-family: Consolas, monospace;
+            white-space: pre;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        .answer-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        strong {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== C卷 ==================== -->
+<div class="paper-box">
+    <h1>设计模式综合试卷（C卷）</h1>
+    <div class="title-info">适用：计算机类设计模式考试 | 语言：C++ | 满分：100分</div>
+
+    <h2>一、分析题（3题，每题10分，共30分）</h2>
+    <div class="question">
+        <h3>1. 设计原则分析</h3>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+// 正方形继承长方形
+class Rectangle {
+protected:
+    int w, h;
+public:
+    void setW(int w) { this->w = w; }
+    void setH(int h) { this->h = h; }
+    int area() { return w*h; }
+};
+class Square : public Rectangle {
+public:
+    void setW(int w) { this->w = w; this->h = w; }
+    void setH(int h) { this->w = h; this->h = h; }
+};
+        </pre>
+        <p>问题：该代码违背了哪条软件设计原则？说明<strong>具体原因</strong>，并给出<strong>改进方案</strong>。</p>
+    </div>
+
+    <div class="question">
+        <h3>2. 代码缺陷与模式优化</h3>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+// 播放器直接调用所有子系统功能
+class Player {
+public:
+    void play() {
+        cout << "加载音频" << endl;
+        cout << "加载视频" << endl;
+        cout << "播放字幕" << endl;
+        cout << "开始播放" << endl;
+    }
+};
+        </pre>
+        <p>问题：代码耦合度极高，调用方需要依赖所有子系统，可用哪种设计模式解耦？写出<strong>详细优化思路</strong>。</p>
+    </div>
+
+    <div class="question">
+        <h3>3. 类图绘制</h3>
+        <p>请画出<strong>适配器模式（类适配器）</strong>标准类图，并标注：目标接口、适配者、适配器、客户端。</p>
+    </div>
+
+    <h2>二、简答题（2题，每题15分，共30分）</h2>
+    <div class="question">
+        <h3>1. 适配器模式场景</h3>
+        <p><strong>详细场景</strong>：系统原有读卡器只能读SD卡，现需要兼容TF卡，不修改原有代码，通过适配器兼容两种卡。<br>
+        <strong>要求</strong>：使用<strong>类适配器模式</strong>实现，写出核心C++代码（无需客户端）。</p>
+    </div>
+    <div class="question">
+        <h3>2. 迭代器模式场景</h3>
+        <p><strong>详细场景</strong>：自定义集合类（如数组容器），需要提供统一的遍历方式，不暴露集合内部结构。<br>
+        <strong>要求</strong>：使用<strong>迭代器模式</strong>实现，写出核心代码（无需客户端）。</p>
+    </div>
+
+    <h2>三、设计题（2题，每题20分，共40分）</h2>
+    <div class="question">
+        <h3>1. 外观模式+单例模式：家庭影院系统</h3>
+        <p><strong>详细场景</strong>：<br>
+        ① 家庭影院包含：投影仪、音响、DVD机，开启/关闭需要操作所有设备；<br>
+        ② 影院控制器全局唯一，只能有一个实例。<br>
+        <strong>明确要求</strong>：<br>
+        1. 单例模式实现全局控制器；<br>
+        2. 外观模式封装所有设备的开启/关闭操作；<br>
+        3. 客户端：调用控制器一键开启/关闭影院。<br>
+        <strong>技术要求</strong>：<strong>外观模式+单例模式</strong>，完整可运行C++代码（含客户端）。</p>
+    </div>
+    <div class="question">
+        <h3>2. 抽象工厂模式：跨平台UI组件</h3>
+        <p><strong>详细场景</strong>：<br>
+        ① 支持Windows、Mac两个平台，每个平台都有按钮、文本框组件；<br>
+        ② 通过工厂统一创建组件，不关心平台细节。<br>
+        <strong>明确要求</strong>：<br>
+        1. 定义抽象产品（按钮、文本框）、具体产品；<br>
+        2. 定义抽象工厂、具体平台工厂；<br>
+        3. 客户端：创建Windows平台组件并使用。<br>
+        <strong>技术要求</strong>：<strong>抽象工厂模式</strong>，完整可运行C++代码（含客户端）。</p>
+    </div>
+
+    <div class="answer-box">
+        <h2>C卷 参考答案</h2>
+        <h3>一、分析题</h3>
+        <p><strong>1.</strong> 违背：<strong>里氏替换原则</strong><br>
+        原因：正方形重写了长方形的宽高设置方法，破坏了父类的行为逻辑，子类不能完全替换父类。<br>
+        改进：抽取抽象图形类，长方形和正方形分别独立继承，取消继承关系。</p>
+        <p><strong>2.</strong> 适用模式：<strong>外观模式</strong><br>
+        思路：创建外观类封装所有子系统操作，调用方只依赖外观类，降低耦合，统一调用入口。</p>
+        <p><strong>3.</strong> 适配器模式类图</p>
+        <div class="class-diagram">
++----------------+       +----------------+
+|  Target(目标)  |       | Adaptee(适配者)|
++----------------+       +----------------+
+| +request()     |       | +specificReq() |
++----------------+       +----------------+
+       ^                          ^
+       |                          |
++----------------+----------------+
+|   Adapter(适配器)              |
++--------------------------------+
+| +request()                     |
++--------------------------------+
+        </div>
+
+        <h3>二、简答题</h3>
+        <p><strong>1. 类适配器模式</strong></p>
+        <pre class="code-block">
+// 目标接口：SD卡读卡器
+class SDCard {
+public:
+    virtual void readSD() = 0;
+    virtual ~SDCard() = default;
+};
+// 适配者：TF卡
+class TFCard {
+public:
+    void readTF() { cout << "读取TF卡数据" << endl; }
+};
+// 适配器：兼容TF卡
+class Adapter : public SDCard, private TFCard {
+public:
+    void readSD() override { readTF(); }
+};
+        </pre>
+
+        <p><strong>2. 迭代器模式</strong></p>
+        <pre class="code-block">
+// 抽象迭代器
+class Iterator {
+public:
+    virtual int next() = 0;
+    virtual bool hasNext() = 0;
+    virtual ~Iterator() = default;
+};
+// 具体集合
+class Array {
+private:
+    int arr[5] = {1,2,3,4,5};
+    int index = 0;
+public:
+    Iterator* createIterator();
+    int get(int i) { return arr[i]; }
+    int size() { return 5; }
+};
+// 具体迭代器
+class ArrayIter : public Iterator {
+private:
+    Array* arr;
+    int idx = 0;
+public:
+    ArrayIter(Array* a) : arr(a) {}
+    int next() override { return arr->get(idx++); }
+    bool hasNext() override { return idx < arr->size(); }
+};
+Iterator* Array::createIterator() { return new ArrayIter(this); }
+        </pre>
+
+        <h3>三、设计题</h3>
+        <p><strong>1. 外观+单例：家庭影院</strong></p>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+// 子系统
+class Projector { public: void on() { cout << "投影仪开启" << endl; } };
+class Audio { public: void on() { cout << "音响开启" << endl; } };
+class DVD { public: void on() { cout << "DVD开启" << endl; } };
+// 单例+外观
+class HomeTheater {
+private:
+    static HomeTheater* ins;
+    Projector* p;
+    Audio* a;
+    DVD* d;
+    HomeTheater() { p = new Projector; a = new Audio; d = new DVD; }
+public:
+    static HomeTheater* get() { if(!ins) ins = new HomeTheater; return ins; }
+    void open() { p->on(); a->on(); d->on(); cout << "影院开启完成" << endl; }
+};
+HomeTheater* HomeTheater::ins = nullptr;
+// 客户端
+int main() {
+    HomeTheater* h = HomeTheater::get();
+    h->open();
+    return 0;
+}
+        </pre>
+
+        <p><strong>2. 抽象工厂：UI组件</strong></p>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+// 抽象产品
+class Button { public: virtual void show() = 0; };
+class Text { public: virtual void show() = 0; };
+// 具体产品
+class WinBtn : public Button { void show() override { cout << "Windows按钮" << endl; } };
+class WinText : public Text { void show() override { cout << "Windows文本框" << endl; } };
+// 抽象工厂
+class Factory {
+public:
+    virtual Button* createBtn() = 0;
+    virtual Text* createText() = 0;
+};
+// 具体工厂
+class WinFactory : public Factory {
+    Button* createBtn() override { return new WinBtn; }
+    Text* createText() override { return new WinText; }
+};
+// 客户端
+int main() {
+    Factory* f = new WinFactory;
+    Button* b = f->createBtn();
+    Text* t = f->createText();
+    b->show(); t->show();
+    return 0;
+}
+        </pre>
+    </div>
+</div>
+
+<!-- ==================== D卷 ==================== -->
+<div class="paper-box">
+    <h1>设计模式综合试卷（D卷）</h1>
+    <div class="title-info">适用：计算机类设计模式考试 | 语言：C++ | 满分：100分</div>
+
+    <h2>一、分析题（3题，每题10分，共30分）</h2>
+    <div class="question">
+        <h3>1. 设计原则分析</h3>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+// 高层模块直接依赖底层数据库实现类
+class Business {
+private:
+    // 直接依赖MySQL具体实现
+    MySQLDB* db;
+public:
+    Business() { db = new MySQLDB; }
+    void save() { db->insert(); }
+};
+        </pre>
+        <p>问题：该代码违背了哪条软件设计原则？说明<strong>具体表现</strong>，并写出<strong>改进思路</strong>。</p>
+    </div>
+
+    <div class="question">
+        <h3>2. 代码缺陷与模式优化</h3>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+// 大量创建相同的圆形对象，消耗内存
+class Circle {
+private:
+    int x, y, r;
+    string color;
+public:
+    Circle(int x,int y,int r,string c) :x(x),y(y),r(r),color(c) {}
+    void draw() { cout << color << "圆" << endl; }
+};
+        </pre>
+        <p>问题：创建大量相同属性对象导致内存浪费，可用哪种设计模式优化？简述<strong>核心思想</strong>。</p>
+    </div>
+
+    <div class="question">
+        <h3>3. 类图绘制</h3>
+        <p>请画出<strong>责任链模式</strong>标准类图，并标注：抽象处理者、具体处理者、客户端。</p>
+    </div>
+
+    <h2>二、简答题（2题，每题15分，共30分）</h2>
+    <div class="question">
+        <h3>1. 享元模式场景</h3>
+        <p><strong>详细场景</strong>：游戏中大量棋子对象，仅位置不同，颜色/形状共享，减少对象创建。<br>
+        <strong>要求</strong>：使用<strong>享元模式</strong>实现棋子共享，写出核心C++代码（无需客户端）。</p>
+    </div>
+    <div class="question">
+        <h3>2. 桥接模式场景</h3>
+        <p><strong>详细场景</strong>：图形有圆形、方形，颜色有红、蓝，通过桥接分离形状与颜色，自由组合。<br>
+        <strong>要求</strong>：使用<strong>桥接模式</strong>实现，写出核心代码（无需客户端）。</p>
+    </div>
+
+    <h2>三、设计题（2题，每题20分，共40分）</h2>
+    <div class="question">
+        <h3>1. 责任链模式+备忘录模式：请假审批系统</h3>
+        <p><strong>详细场景</strong>：<br>
+        ① 请假审批：组长→经理→老板，责任链逐级审批；<br>
+        ② 备忘录保存请假单状态，支持撤回。<br>
+        <strong>明确要求</strong>：<br>
+        1. 责任链实现审批流程；<br>
+        2. 备忘录保存请假信息；<br>
+        3. 客户端：提交请假单，执行审批，撤回请假单。<br>
+        <strong>技术要求</strong>：<strong>责任链+备忘录模式</strong>，完整可运行C++代码（含客户端）。</p>
+    </div>
+    <div class="question">
+        <h3>2. 桥接模式+单例模式：跨平台支付系统</h3>
+        <p><strong>详细场景</strong>：<br>
+        ① 支付方式：微信、支付宝；支付渠道：安卓、iOS；<br>
+        ② 支付管理器全局唯一。<br>
+        <strong>明确要求</strong>：<br>
+        1. 桥接分离支付方式与渠道；<br>
+        2. 单例实现支付管理器；<br>
+        3. 客户端：发起安卓+微信支付。<br>
+        <strong>技术要求</strong>：<strong>桥接+单例模式</strong>，完整可运行C++代码（含客户端）。</p>
+    </div>
+
+    <div class="answer-box">
+        <h2>D卷 参考答案</h2>
+        <h3>一、分析题</h3>
+        <p><strong>1.</strong> 违背：<strong>依赖倒置原则</strong><br>
+        表现：高层业务类直接依赖底层MySQL实现类，未依赖抽象接口，切换数据库需修改源码。<br>
+        改进：定义抽象数据库接口，高层依赖接口，底层实现接口，依赖抽象不依赖具体。</p>
+        <p><strong>2.</strong> 适用模式：<strong>享元模式</strong><br>
+        核心思想：共享相同属性的对象，将属性分为内部状态（共享）和外部状态（独立），减少对象数量。</p>
+        <p><strong>3.</strong> 责任链模式类图</p>
+        <div class="class-diagram">
++----------------+       +----------------+
+| Handler(抽象)  |<------| Client(客户端) |
++----------------+       +----------------+
+| +setNext()     |
+| +handle()      |
++----------------+
+       ^
+       |
++----------------+
+| ConcreteHandler|
++----------------+
+| +handle()      |
++----------------+
+        </div>
+
+        <h3>二、简答题</h3>
+        <p><strong>1. 享元模式</strong></p>
+        <pre class="code-block">
+// 享元接口
+class Chess {
+public:
+    virtual void show(int x,int y) = 0;
+    virtual ~Chess() = default;
+};
+// 具体享元
+class BlackChess : public Chess {
+    void show(int x,int y) override { cout << "黑棋("<<x<<","<<y<<")"<<endl; }
+};
+// 享元工厂
+class ChessFactory {
+private:
+    Chess* black;
+public:
+    ChessFactory() { black = new BlackChess; }
+    Chess* getBlack() { return black; }
+};
+        </pre>
+
+        <p><strong>2. 桥接模式</strong></p>
+        <pre class="code-block">
+// 颜色实现
+class Color {
+public:
+    virtual string getColor() = 0;
+    virtual ~Color() = default;
+};
+class Red : public Color { string getColor() override { return "红色"; } };
+// 形状抽象
+class Shape {
+protected:
+    Color* c;
+public:
+    Shape(Color* c) : c(c) {}
+    virtual void draw() = 0;
+};
+class Circle : public Shape {
+public:
+    Circle(Color* c) : Shape(c) {}
+    void draw() override { cout << c->getColor() << "圆形" << endl; }
+};
+        </pre>
+
+        <h3>三、设计题</h3>
+        <p><strong>1. 责任链+备忘录：请假系统</strong></p>
+        <pre class="code-block">
+#include <iostream>
+#include <string>
+using namespace std;
+// 备忘录
+class Memento {
+private:
+    string info;
+public:
+    Memento(string i) : info(i) {}
+    string getInfo() { return info; }
+};
+// 责任链
+class Leader {
+protected:
+    Leader* next;
+public:
+    void setNext(Leader* l) { next = l; }
+    virtual void handle(int day) = 0;
+};
+class GroupLeader : public Leader {
+    void handle(int day) override {
+        if(day<=1) cout << "组长审批通过" << endl;
+        else next->handle(day);
+    }
+};
+// 客户端
+int main() {
+    Memento* m = new Memento("请假1天");
+    Leader* g = new GroupLeader;
+    Leader* mgr = new Leader;
+    g->setNext(mgr);
+    g->handle(1);
+    return 0;
+}
+        </pre>
+
+        <p><strong>2. 桥接+单例：支付系统</strong></p>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+// 支付方式
+class Pay {
+public:
+    virtual void pay() = 0;
+};
+class WeChat : public Pay { void pay() override { cout << "微信支付" << endl; } };
+// 桥接
+class Channel {
+protected:
+    Pay* p;
+public:
+    Channel(Pay* p) : p(p) {}
+    virtual void pay() = 0;
+};
+class Android : public Channel {
+public:
+    Android(Pay* p) : Channel(p) {}
+    void pay() override { p->pay(); cout << "安卓渠道" << endl; }
+};
+// 单例
+class PayManager {
+private:
+    static PayManager* ins;
+    PayManager() {}
+public:
+    static PayManager* get() { if(!ins) ins = new PayManager; return ins; }
+    void pay(Channel* c) { c->pay(); }
+};
+PayManager* PayManager::ins = nullptr;
+// 客户端
+int main() {
+    PayManager* pm = PayManager::get();
+    Channel* c = new Android(new WeChat);
+    pm->pay(c);
+    return 0;
+}
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>

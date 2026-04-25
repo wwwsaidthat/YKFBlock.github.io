@@ -6,11 +6,41 @@
 <title>PDF 文档展示 - 我的个人博客</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-    .pdf-container {
-        width: 100%;
-        height: 800px;
-        border: none;
-    }
+  .pdf-toolbar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+  .pdf-toolbar .button {
+    padding: 8px 12px;
+  }
+  .pdf-toolbar input[type="number"] {
+    width: 88px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+  .pdf-viewer {
+    width: 100%;
+    min-height: 600px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: rgba(0,0,0,0.02);
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 12px;
+  }
+  canvas#pdf-canvas {
+    max-width: 100%;
+    height: auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+  }
 </style>
 </head>
 <body>
@@ -30,8 +60,22 @@
 <article class="post-detail">
 <h1 class="post-title" id="pdf-title">PDF 文档展示</h1>
 <div class="post-meta" id="pdf-file-name"></div>
-<div class="post-content" id="pdf-wrapper">
-    <!-- PDF will be embedded here -->
+<div class="pdf-toolbar" id="pdf-toolbar" style="display:none;">
+  <button class="button secondary" id="pdf-prev">上一页</button>
+  <button class="button secondary" id="pdf-next">下一页</button>
+  <span id="pdf-page-info"></span>
+  <label>
+    跳转
+    <input id="pdf-page-input" type="number" min="1" step="1">
+  </label>
+  <button class="button secondary" id="pdf-zoom-out">缩小</button>
+  <button class="button secondary" id="pdf-zoom-in">放大</button>
+  <span id="pdf-zoom-info"></span>
+  <a class="button secondary" id="pdf-open" href="#" target="_blank" rel="noopener noreferrer">新窗口打开</a>
+  <a class="button secondary" id="pdf-download" href="#" download>下载</a>
+</div>
+<div class="post-content pdf-viewer" id="pdf-wrapper">
+  <canvas id="pdf-canvas"></canvas>
 </div>
 </article>
 <a href="posts.html" class="button secondary">返回文章列表</a>
@@ -44,6 +88,7 @@
 <span>Powered by GitHub Pages</span>
 </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -54,7 +99,7 @@ function getPdfFileFromQuery() {
 
 function showMessage(message) {
   var container = document.getElementById("pdf-wrapper");
-  container.innerHTML = `<p>${message}</p>`;
+  container.innerHTML = "<p>" + message + "</p>";
 }
 
 function initPdfViewer() {
@@ -68,33 +113,120 @@ function initPdfViewer() {
     return;
   }
 
-  // Decode file name for display
+  var decodedName = file;
   try {
-      var decodedName = decodeURIComponent(file);
-      // Extract filename from path
-      var filename = decodedName.split('/').pop();
-      titleEl.textContent = filename;
-      nameEl.textContent = "文件路径: " + decodedName;
+    decodedName = decodeURIComponent(file);
+    var filename = decodedName.split("/").pop();
+    titleEl.textContent = filename;
+    nameEl.textContent = "文件路径: " + decodedName;
   } catch (e) {
-      nameEl.textContent = file;
+    nameEl.textContent = file;
   }
 
-  var container = document.getElementById("pdf-wrapper");
-  
-  // Create object/embed tag
-  // Using object with fallback
-  var object = document.createElement('object');
-  object.data = file;
-  object.type = "application/pdf";
-  object.className = "pdf-container";
-  
-  var fallback = document.createElement('p');
-  fallback.innerHTML = `您的浏览器不支持直接嵌入 PDF。<a href="${file}" target="_blank">点击此处下载或预览 PDF 文件</a>。`;
-  
-  object.appendChild(fallback);
-  
-  container.innerHTML = '';
-  container.appendChild(object);
+  var toolbar = document.getElementById("pdf-toolbar");
+  var openEl = document.getElementById("pdf-open");
+  var downloadEl = document.getElementById("pdf-download");
+  openEl.setAttribute("href", file);
+  downloadEl.setAttribute("href", file);
+
+  if (!window.pdfjsLib) {
+    showMessage('PDF 渲染组件加载失败。<a href="' + file + '" target="_blank" rel="noopener noreferrer">点击此处打开 PDF</a>。');
+    return;
+  }
+
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+
+  var canvas = document.getElementById("pdf-canvas");
+  var ctx = canvas.getContext("2d");
+  var pageInfo = document.getElementById("pdf-page-info");
+  var zoomInfo = document.getElementById("pdf-zoom-info");
+  var pageInput = document.getElementById("pdf-page-input");
+  var prevBtn = document.getElementById("pdf-prev");
+  var nextBtn = document.getElementById("pdf-next");
+  var zoomInBtn = document.getElementById("pdf-zoom-in");
+  var zoomOutBtn = document.getElementById("pdf-zoom-out");
+
+  var pdfDoc = null;
+  var currentPage = 1;
+  var totalPages = 1;
+  var scale = 1.25;
+  var rendering = false;
+  var pendingPage = null;
+
+  function updateControls() {
+    pageInfo.textContent = currentPage + " / " + totalPages;
+    zoomInfo.textContent = Math.round(scale * 100) + "%";
+    pageInput.max = String(totalPages);
+    pageInput.value = String(currentPage);
+    prevBtn.disabled = currentPage <= 1;
+    nextBtn.disabled = currentPage >= totalPages;
+  }
+
+  function renderPage(pageNum) {
+    if (!pdfDoc) return;
+    if (rendering) {
+      pendingPage = pageNum;
+      return;
+    }
+    rendering = true;
+    pdfDoc.getPage(pageNum).then(function (page) {
+      var viewport = page.getViewport({ scale: scale });
+      var outputScale = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(viewport.width * outputScale);
+      canvas.height = Math.floor(viewport.height * outputScale);
+      canvas.style.width = Math.floor(viewport.width) + "px";
+      canvas.style.height = Math.floor(viewport.height) + "px";
+      var transform = outputScale !== 1 ? [outputScale, 0, 0, outputScale, 0, 0] : null;
+      var renderTask = page.render({ canvasContext: ctx, viewport: viewport, transform: transform });
+      return renderTask.promise;
+    }).then(function () {
+      rendering = false;
+      if (pendingPage !== null) {
+        var p = pendingPage;
+        pendingPage = null;
+        renderPage(p);
+      }
+    }).catch(function (err) {
+      rendering = false;
+      showMessage("PDF 渲染失败：" + (err && err.message ? err.message : String(err)));
+    });
+  }
+
+  function setPage(pageNum) {
+    if (!pdfDoc) return;
+    var p = Math.max(1, Math.min(totalPages, pageNum));
+    currentPage = p;
+    updateControls();
+    renderPage(currentPage);
+  }
+
+  function setScale(nextScale) {
+    scale = Math.max(0.5, Math.min(3.0, nextScale));
+    updateControls();
+    renderPage(currentPage);
+  }
+
+  prevBtn.addEventListener("click", function () { setPage(currentPage - 1); });
+  nextBtn.addEventListener("click", function () { setPage(currentPage + 1); });
+  zoomInBtn.addEventListener("click", function () { setScale(scale + 0.15); });
+  zoomOutBtn.addEventListener("click", function () { setScale(scale - 0.15); });
+  pageInput.addEventListener("change", function () {
+    var n = parseInt(pageInput.value, 10);
+    if (!isNaN(n)) setPage(n);
+  });
+
+  toolbar.style.display = "";
+  updateControls();
+
+  window.pdfjsLib.getDocument({ url: file }).promise.then(function (pdf) {
+    pdfDoc = pdf;
+    totalPages = pdf.numPages || 1;
+    currentPage = 1;
+    updateControls();
+    renderPage(currentPage);
+  }).catch(function (err) {
+    showMessage('PDF 加载失败。<a href="' + file + '" target="_blank" rel="noopener noreferrer">点击此处打开 PDF</a>。' + "<br>" + (err && err.message ? err.message : String(err)));
+  });
 }
 
 initPdfViewer();

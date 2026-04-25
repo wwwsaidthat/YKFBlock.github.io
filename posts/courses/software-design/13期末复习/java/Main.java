@@ -1,42 +1,23 @@
-import java.util.List;
-import java.util.ArrayList;
 public class Main{
   public static void main(String[] args){
-    Builder builder = new ConcreteBuilder();
-    builder.buildPart();
-    Product product = builder.getResult();
-    product.show();
+    Facade fc = new Facade();
+    System.out.println(fc.prove());
   }
 }
-
-class Product{
-	List<String> parts;
-  public void Add(String part){
-    parts.add(part);
-  }
-  public void show(){
-    System.out.print("Composed by:");
-    for(String part:parts){
-      System.out.print(part + " ");
-    }
-    System.out.println();
-  }
+class SubFlow1{
+  public boolean isTrue(){return true;}
 }
-
-abstract class Builder{
-  public abstract void buildPart();
-  public abstract Product getResult();
+class SubFlow2{
+  public boolean isOk(){return true;}
 }
-class ConcreteBuilder extends Builder{
-  Product product= new Product();
-  @Override
-  public void buildPart(){
-    product.Add("A");
-    product.Add("B");
-    product.Add("C");
-  }
-  @Override
-  public Product getResult(){
-    return product;
+class SubFlow3{
+  public boolean isSafe(){return true;}
+}
+class Facade{
+  SubFlow1 sf1 = new SubFlow1();
+  SubFlow2 sf2 = new SubFlow2();
+  SubFlow3 sf3 = new SubFlow3();
+  public boolean prove(){
+    return sf1.isTrue()&&sf2.isOk()&&sf3.isSafe();
   }
 }
