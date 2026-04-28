@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XMind 文档展示 - 我的个人博客</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+  .xmind-toolbar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 12px 0;
+  }
+  .xmind-toolbar .button {
+    padding: 8px 12px;
+  }
+  .xmind-toolbar select {
+    min-width: 160px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.15);
+  }
+  .xmind-viewer {
+    width: 100%;
+    min-height: 600px;
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,0.12);
+    background: rgba(0,0,0,0.02);
+    overflow: auto;
+    padding: 12px;
+  }
+  #xmind-container {
+    width: 100%;
+    min-height: 560px;
+  }
+</style>
+</head>
+<body>
+<header class="site-header">
+<div class="container header-inner">
+<div class="logo">我的博客</div>
+<nav class="nav">
+<a href="index.html" class="nav-link">首页</a>
+<a href="posts.html" class="nav-link">文章</a>
+<a href="about.html" class="nav-link">关于</a>
+</nav>
+</div>
+</header>
+<main class="site-main">
+<section class="section">
+<div class="container">
+<article class="post-detail">
+<h1 class="post-title" id="xmind-title">XMind 文档展示</h1>
+<div class="post-meta" id="xmind-file-name"></div>
+<div class="xmind-toolbar" id="xmind-toolbar" style="display:none;">
+  <button class="button secondary" id="xmind-fit">自适应</button>
+  <button class="button secondary" id="xmind-zoom-out">缩小</button>
+  <button class="button secondary" id="xmind-zoom-in">放大</button>
+  <span id="xmind-zoom-info"></span>
+  <label>
+    分页
+    <select id="xmind-sheet-select"></select>
+  </label>
+  <a class="button secondary" id="xmind-open" href="#" target="_blank" rel="noopener noreferrer">新窗口打开</a>
+  <a class="button secondary" id="xmind-download" href="#" download>下载</a>
+</div>
+<div class="post-content xmind-viewer" id="xmind-wrapper">
+  <div id="xmind-container"></div>
+</div>
+</article>
+<a href="posts.html" class="button secondary">返回文章列表</a>
+</div>
+</section>
+</main>
+<footer class="site-footer">
+<div class="container footer-inner">
+<span>© <span id="year"></span> 我的个人博客</span>
+<span>Powered by GitHub Pages</span>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/xmind-embed-viewer/dist/umd/xmind-embed-viewer.js"></script>
+<script>
+document.getElementById("year").textContent = new Date().getFullYear();
+
+function getXMindFileFromQuery() {
+  var params = new URLSearchParams(window.location.search);
+  return params.get("file");
+}
+
+function showMessage(message) {
+  var container = document.getElementById("xmind-wrapper");
+  container.innerHTML = "<p>" + message + "</p>";
+}
+
+function initXMindViewer() {
+  var file = getXMindFileFromQuery();
+  var nameEl = document.getElementById("xmind-file-name");
+  var titleEl = document.getElementById("xmind-title");
+
+  if (!file) {
+    nameEl.textContent = "未指定文件";
+    showMessage("请在链接后添加 ?file=posts/文件名.xmind 来指定要展示的 XMind 文件。");
+    return;
+  }
+
+  var decodedName = file;
+  try {
+    decodedName = decodeURIComponent(file);
+    var filename = decodedName.split("/").pop();
+    titleEl.textContent = filename;
+    nameEl.textContent = "文件路径: " + decodedName;
+  } catch (e) {
+    nameEl.textContent = file;
+  }
+
+  var toolbar = document.getElementById("xmind-toolbar");
+  var openEl = document.getElementById("xmind-open");
+  var downloadEl = document.getElementById("xmind-download");
+  openEl.setAttribute("href", file);
+  downloadEl.setAttribute("href", file);
+
+  if (!window.XMindEmbedViewer) {
+    showMessage('XMind 渲染组件加载失败。<a href="' + file + '" target="_blank" rel="noopener noreferrer">点击此处打开文件</a>。');
+    return;
+  }
+
+  var viewer = new window.XMindEmbedViewer({
+    el: "#xmind-container"
+  });
+
+  var zoomInfo = document.getElementById("xmind-zoom-info");
+  var zoomOutBtn = document.getElementById("xmind-zoom-out");
+  var zoomInBtn = document.getElementById("xmind-zoom-in");
+  var fitBtn = document.getElementById("xmind-fit");
+  var sheetSelect = document.getElementById("xmind-sheet-select");
+  var zoomScale = 100;
+
+  function updateZoomInfo() {
+    zoomInfo.textContent = Math.round(zoomScale) + "%";
+  }
+
+  function setZoom(scale) {
+    zoomScale = Math.max(50, Math.min(500, scale));
+    viewer.setZoomScale(zoomScale);
+    updateZoomInfo();
+  }
+
+  function fillSheets() {
+    var sheets = viewer.sheets || [];
+    sheetSelect.innerHTML = "";
+    sheets.forEach(function (sheet, index) {
+      var opt = document.createElement("option");
+      opt.value = sheet.id || String(index);
+      opt.textContent = sheet.title || ("Sheet " + (index + 1));
+      sheetSelect.appendChild(opt);
+    });
+    if (sheets.length > 0) {
+      sheetSelect.value = sheets[0].id || "0";
+    }
+  }
+
+  zoomOutBtn.addEventListener("click", function () { setZoom(zoomScale - 10); });
+  zoomInBtn.addEventListener("click", function () { setZoom(zoomScale + 10); });
+  fitBtn.addEventListener("click", function () { viewer.setFitMap(); });
+  sheetSelect.addEventListener("change", function () {
+    var id = sheetSelect.value;
+    if (id) viewer.switchSheet(id);
+  });
+
+  viewer.addEventListener("sheets-load", function () {
+    fillSheets();
+  });
+
+  toolbar.style.display = "";
+  updateZoomInfo();
+
+  fetch(file).then(function (response) {
+    if (!response.ok) throw new Error("加载失败");
+    return response.arrayBuffer();
+  }).then(function (buffer) {
+    return viewer.load(buffer);
+  }).then(function () {
+    viewer.setFitMap();
+  }).catch(function () {
+    showMessage("加载 XMind 文件失败，请检查文件路径是否正确。");
+  });
+}
+
+initXMindViewer();
+</script>
+</body>
+</html>
