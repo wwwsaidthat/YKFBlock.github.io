@@ -1,101 +1,50 @@
-class ComputerAssembler{
-    private static Builder builder = new ConcreteBuilder();
-    
-    public static Computer assembleComputer(String type) {
-        switch (type) {
-            case "office":
-                builder.buildCpu("i3");
-                builder.buildMemory("8GB");
-                builder.buildHardDisk("512GB");
-                builder.buildGraphicsCard("集成显卡");
-                break;
-            case "gaming":
-                builder.buildCpu("i7");
-                builder.buildMemory("16GB");
-                builder.buildHardDisk("1TB");
-                builder.buildGraphicsCard("RTX4060");
-                break;  
-            case "design":
-                builder.buildCpu("i9");
-                builder.buildMemory("32GB");
-                builder.buildHardDisk("2TB");
-                builder.buildGraphicsCard("RTX4090");
-                break;          
-            default:
-                break;
-        }
-        return builder.getComputer();
+public class Main{
+    public static void main(String[] args){
+
     }
-    
 }
-abstract class Builder{
-    abstract void buildCpu(String cpu);
-    abstract void buildMemory(String memory);
-    abstract void buildHardDisk(String hardDisk);
-    abstract void buildGraphicsCard(String graphicsCard);
-    abstract Computer getComputer();
+abstract class Order{
+    int ID;
+    double price;
+    int num;
+    String payMethod;
+
 }
-class ConcreteBuilder extends Builder{
-    private Computer computer = new Computer();
-    @Override
-    public void buildCpu(String cpu) {
-        computer.cpu = cpu;
+class NormalOrder extends Order{
+    public NormalOrder(int ID, double price, int num, String payMethod){
+        this.ID = ID;
+        this.price = price;
+        this.num = num;
+        this.payMethod = payMethod;
     }
-    @Override
-    public void buildMemory(String memory) {
-        computer.memory = memory;
+}
+ 
+class PreOrder extends Order{
+    public PreOrder(int ID, double price, int num){
+        this.ID = ID;
+        this.price = price;
+        this.num = num;
+        this.payMethod = "AliPay";
     }
-    @Override
-    public void buildHardDisk(String hardDisk) {
-        computer.hardDisk = hardDisk;
-    }
-    @Override
-    public void buildGraphicsCard(String graphicsCard) {
-        computer.graphicsCard = graphicsCard;
-    }
-    @Override
-    public Computer getComputer() {
-        return computer;
-    }
-   
+}
+class GroupOrder extends Order{
+
+}
+abstract class PaymentMethod{
+    public abstract void pay(double amount);
 }
 
-class Computer{
-    String cpu;
-    String memory;
-    String hardDisk;
-    String graphicsCard;
-    public String getCpu() {
-        return cpu;
+class PaymentMethodProvider{
+    PaymentMethod getPaymentMethod(String methodName){
+
     }
-    public String getMemory() {
-        return memory;
-    }
-    public String getHardDisk() {
-        return hardDisk;
-    }
-    public String getGraphicsCard() {
-        return graphicsCard;
-    }
-    public String toString() {
-        return "Computer{" +
-                "cpu='" + cpu + '\'' +
-                ", memory='" + memory + '\'' +
-                ", hardDisk='" + hardDisk + '\'' +
-                ", graphicsCard='" + graphicsCard + '\'' +
-                '}';
-    } 
 }
 
-public class Main {
+abstract class OrderProcessor{
+    final void processOrder(Order order){
+        System.out.println("check order");
+        double totalPrice = (double)(order.price * order.num );
 
-    public static void main(String[] args) {
-        Computer office = ComputerAssembler.assembleComputer("office");
-        System.out.println(office.toString());
-        Computer gaming = ComputerAssembler.assembleComputer("gaming");
-        System.out.println(gaming.toString());
-        Computer design = ComputerAssembler.assembleComputer("design");
-        System.out.println(design.toString());
     }
-        
+    public abstract void doPayment(Order order);
 }
