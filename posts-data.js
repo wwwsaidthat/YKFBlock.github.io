@@ -3,7 +3,7 @@
  * 自动生成的文件 — 包含 posts/ 目录下所有可展示文件的信息。
  * 由 generate-posts-data.js 扫描生成。
  * 重新生成: node generate-posts-data.js
- * 生成时间: 2026-06-24T12:09:06.052Z
+ * 生成时间: 2026-06-24T12:19:24.572Z
  */
 
 const POSTS_DATA = [
@@ -729,6 +729,20 @@ const POSTS_DATA = [
     "viewer": "markdown-viewer.html"
   },
   {
+    "file": "posts/courses/软件系统设计/软件系统架构/架构模式复习.md",
+    "title": "架构模式复习",
+    "date": "2026-06-24",
+    "excerpt": "1. 架构不是凭空发明的：每一种架构都在回应当时最紧迫的技术与业务矛盾",
+    "viewer": "markdown-viewer.html"
+  },
+  {
+    "file": "posts/courses/软件系统设计/软件系统架构/架构模式整理YKF答案版.md",
+    "title": "架构模式整理YKF答案版",
+    "date": "2026-06-24",
+    "excerpt": "1. 主机终端阶段",
+    "viewer": "markdown-viewer.html"
+  },
+  {
     "file": "posts/courses/软件系统设计/03工厂模式/简单工厂模式/简单工厂模式.png",
     "title": "简单工厂模式",
     "date": "2026-06-24",
@@ -1142,6 +1156,20 @@ const POSTS_DATA = [
     "viewer": "pdf-viewer.html"
   },
   {
+    "file": "posts/courses/软件系统设计/软件系统架构/软件体系结构复习.md",
+    "title": "软件体系结构复习",
+    "date": "2026-06-24",
+    "excerpt": "event driven design event flow",
+    "viewer": "markdown-viewer.html"
+  },
+  {
+    "file": "posts/courses/软件系统设计/软件系统架构/软件系统设计期末复习.md",
+    "title": "软件系统设计期末复习",
+    "date": "2026-06-24",
+    "excerpt": "1. 软件模式是将模式的一般概念应用于软件开发领域，即软件开发的总体指导思路或参照样板。",
+    "viewer": "markdown-viewer.html"
+  },
+  {
     "file": "posts/courses/软件系统设计/往年卷/软统2022试卷.pdf",
     "title": "软统2022试卷",
     "date": "2026-06-24",
@@ -1189,6 +1217,13 @@ const POSTS_DATA = [
     "date": "2026-06-24",
     "excerpt": "",
     "viewer": "pdf-viewer.html"
+  },
+  {
+    "file": "posts/courses/软件系统设计/软件系统架构/设计模式优缺点.md",
+    "title": "设计模式优缺点",
+    "date": "2026-06-24",
+    "excerpt": "1. 策略模式（Strategy），又叫做政策模式（Policy）",
+    "viewer": "markdown-viewer.html"
   },
   {
     "file": "posts/courses/软件系统设计/13期末复习/设计模式整理/设计模式整理.md",
@@ -1385,6 +1420,13 @@ const POSTS_DATA = [
     "date": "2026-06-24",
     "excerpt": "",
     "viewer": "image-viewer.html"
+  },
+  {
+    "file": "posts/courses/软件系统设计/软件系统架构/ADD.md",
+    "title": "ADD",
+    "date": "2026-06-24",
+    "excerpt": "1. 软件架构从何而来？软件架构驱动因素都有几种？排序依据",
+    "viewer": "markdown-viewer.html"
   },
   {
     "file": "posts/courses/软件系统设计/软件系统架构/ADD 3.0 设计方法-完整知识点整理.pdf",
@@ -1847,6 +1889,13 @@ const POSTS_DATA = [
     "date": "2026-06-24",
     "excerpt": "",
     "viewer": "java-code-viewer.html"
+  },
+  {
+    "file": "posts/courses/软件系统设计/软件系统架构/PPT.md",
+    "title": "PPT",
+    "date": "2026-06-24",
+    "excerpt": "1. 桥接模式",
+    "viewer": "markdown-viewer.html"
   },
   {
     "file": "posts/courses/软件系统设计/软件系统架构/SingleAgent/README.md",
