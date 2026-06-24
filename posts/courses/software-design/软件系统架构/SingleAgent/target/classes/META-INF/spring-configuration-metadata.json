@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "app.model",
+      "type": "com.course.singleagent.config.ModelProperties",
+      "sourceType": "com.course.singleagent.config.ModelProperties"
+    },
+    {
+      "name": "app.output",
+      "type": "com.course.singleagent.config.OutputProperties",
+      "sourceType": "com.course.singleagent.config.OutputProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.model.api-key",
+      "type": "java.lang.String",
+      "sourceType": "com.course.singleagent.config.ModelProperties"
+    },
+    {
+      "name": "app.model.base-url",
+      "type": "java.lang.String",
+      "sourceType": "com.course.singleagent.config.ModelProperties"
+    },
+    {
+      "name": "app.model.model-name",
+      "type": "java.lang.String",
+      "sourceType": "com.course.singleagent.config.ModelProperties"
+    },
+    {
+      "name": "app.output.root-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.course.singleagent.config.OutputProperties"
+    }
+  ],
+  "hints": []
+}
