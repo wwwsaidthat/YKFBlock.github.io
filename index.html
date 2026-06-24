@@ -19,8 +19,7 @@
   }
   .profile-photo { flex: 0 0 auto; }
   .profile-photo img {
-    width: 130px; height: 130px;
-    object-fit: cover;
+    width: 130px; height: auto;
     border-radius: 4px;
     border: 1px solid #e8e4e0;
   }
@@ -86,7 +85,7 @@
   /* ---- Mobile ---- */
   @media (max-width: 640px) {
     .profile-card { flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 24px 18px; }
-    .profile-photo img { width: 90px; height: 90px; }
+    .profile-photo img { width: 90px; height: auto; }
     .profile-links { justify-content: center; }
     .pub-entry { flex-direction: column; gap: 4px; }
     .pub-index { text-align: left; }
@@ -119,7 +118,7 @@
     <p class="profile-name-en">Kaifang Yao</p>
     <p class="profile-affiliation">
       Undergraduate · <strong>Software Institute, Nanjing University</strong><br>
-      State Key Laboratory for Novel Software Technology<br>
+      η (ETA) Lab<br>
       Nanjing, China
     </p>
     <div class="profile-links">
@@ -166,7 +165,7 @@
 
 <!-- Blog -->
 <div class="blog-cta">
-  <p>学习笔记、课程资料与论文阅读整理</p>
+  <p>Course notes, study materials, and paper readings</p>
   <a href="posts.html" class="button">Browse All Posts</a>
 </div>
 

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>文章列表 - 我的个人博客</title>
+<title>Posts — Kaifang Yao</title>
 <link rel="stylesheet" href="styles.css">
 <style>
 /* 空状态 */
@@ -23,20 +23,20 @@
 <body>
 <header class="site-header">
 <div class="container header-inner">
-<div class="logo">我的博客</div>
+<div class="logo">Kaifang Yao</div>
 <nav class="nav">
-<a href="index.html" class="nav-link">首页</a>
-<a href="posts.html" class="nav-link active">文章</a>
-<a href="about.html" class="nav-link">关于</a>
+<a href="index.html" class="nav-link">Home</a>
+<a href="posts.html" class="nav-link active">Posts</a>
+<a href="about.html" class="nav-link">About</a>
 </nav>
 </div>
 </header>
 <main class="site-main">
 <section class="section">
 <div class="container">
-<h1 class="section-title">全部文章</h1>
+<h1 class="section-title">All Posts</h1>
 <div class="post-search">
-<input id="post-search-input" type="text" placeholder="输入关键词搜索文章…">
+<input id="post-search-input" type="text" placeholder="Search posts...">
 </div>
 <div id="post-groups" class="post-groups">
   <!-- 由 JavaScript 动态生成 -->
@@ -47,7 +47,7 @@
 </main>
 <footer class="site-footer">
 <div class="container footer-inner">
-<span>© <span id="year"></span> 我的个人博客</span>
+<span>© <span id="year"></span> Kaifang Yao</span>
 <span>Powered by GitHub Pages</span>
 </div>
 </footer>
@@ -59,10 +59,10 @@
 
   // ---- 配置 ----
   var CATEGORY_NAMES = {
-    '编程题目': '编程题目',
-    '科研': '科研',
-    'courses': '课程',
-    'others': '其他'
+    '编程题目': 'Programming',
+    '科研': 'Research',
+    'courses': 'Courses',
+    'others': 'Others'
   };
 
   // 顶层显示顺序
@@ -272,7 +272,7 @@
       }
     }
 
-    document.getElementById('post-count').textContent = '共 ' + totalCount + ' 篇文章';
+    document.getElementById('post-count').textContent = totalCount + ' posts';
   }
 
   // ---- 搜索 ----
@@ -298,7 +298,7 @@
       // 更新分组可见性
       updateGroupVisibility(!!keyword);
       document.getElementById('post-count').textContent =
-        (keyword ? '搜索到 ' + visibleCount + ' 篇文章' : '共 ' + items.length + ' 篇文章');
+        (keyword ? visibleCount + ' posts found' : items.length + ' posts');
     });
   }
 
