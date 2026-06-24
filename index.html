@@ -11,171 +11,84 @@
     display: flex;
     align-items: flex-start;
     gap: 36px;
-    background: #fff;
-    border-radius: 14px;
-    padding: 36px 40px;
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    margin-bottom: 36px;
-  }
-
-  .profile-photo { flex: 0 0 auto; }
-
-  .profile-photo img {
-    width: 140px;
-    height: 140px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 3px solid #f1f5f9;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  }
-
-  .profile-info { flex: 1 1 0; min-width: 0; }
-
-  .profile-name {
-    font-size: 28px;
-    font-weight: 700;
-    color: #0f172a;
-    letter-spacing: -0.02em;
-    margin-bottom: 2px;
-  }
-
-  .profile-name-en {
-    font-size: 15px;
-    color: #94a3b8;
-    margin-bottom: 10px;
-  }
-
-  .profile-affiliation {
-    font-size: 14px;
-    color: #475569;
-    line-height: 1.75;
-  }
-  .profile-affiliation strong { color: #1e293b; }
-
-  .profile-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 14px;
-  }
-
-  .profile-link {
-    font-size: 13px;
-    padding: 5px 14px;
+    background: #fdfdfc;
     border-radius: 6px;
-    background: #f8fafc;
-    color: #475569;
-    text-decoration: none;
-    border: 1px solid #e2e8f0;
-    transition: all 0.15s;
+    padding: 36px 40px;
+    border: 1px solid #e8e4e0;
+    margin-bottom: 40px;
   }
-  .profile-link:hover { border-color: #2563eb; color: #2563eb; background: #eff6ff; }
+  .profile-photo { flex: 0 0 auto; }
+  .profile-photo img {
+    width: 130px; height: 130px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e8e4e0;
+  }
+  .profile-info { flex: 1 1 0; min-width: 0; }
+  .profile-name {
+    font-size: 26px; font-weight: 600;
+    color: #2c3e50; letter-spacing: 0.01em;
+    margin-bottom: 4px;
+  }
+  .profile-name-en { font-size: 14px; color: #a09b96; margin-bottom: 12px; }
+  .profile-affiliation { font-size: 14px; color: #5a6c7d; line-height: 1.8; }
+  .profile-affiliation strong { color: #2c3e50; font-weight: 600; }
+  .profile-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .profile-link {
+    font-size: 12px; padding: 5px 12px; border-radius: 4px;
+    background: #f8f6f4; color: #5a6c7d;
+    text-decoration: none; border: 1px solid #e8e4e0; transition: all 0.15s;
+  }
+  .profile-link:hover { border-color: #6c3b4e; color: #6c3b4e; }
 
   /* ---- Section title ---- */
   .sec-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: #0f172a;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #e2e8f0;
-    margin-bottom: 20px;
+    font-size: 18px; font-weight: 600; color: #2c3e50;
+    margin-bottom: 20px; letter-spacing: 0.02em;
   }
 
   /* ---- Publications ---- */
-  .pub-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 36px;
-  }
-
+  .pub-list { display: flex; flex-direction: column; gap: 2px; margin-bottom: 40px; }
   .pub-entry {
-    display: flex;
-    align-items: baseline;
-    gap: 14px;
-    background: #fff;
-    border-radius: 8px;
-    padding: 16px 22px;
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-    transition: box-shadow 0.2s, transform 0.2s;
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 12px 0; border-bottom: 1px solid #f0ece8;
   }
-  .pub-entry:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-    transform: translateY(-1px);
-  }
-
   .pub-index {
-    flex: 0 0 auto;
-    width: 26px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #2563eb;
-    text-align: right;
+    flex: 0 0 auto; width: 26px; font-size: 12px;
+    color: #a09b96; text-align: right;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
   }
-
-  .pub-body {
-    flex: 1 1 0;
-    min-width: 0;
-  }
-
+  .pub-body { flex: 1 1 0; min-width: 0; }
   .pub-paper-title {
-    font-size: 15px;
-    font-weight: 600;
-    color: #1e293b;
-    line-height: 1.5;
-    margin-bottom: 4px;
-    text-decoration: none;
-    display: block;
+    font-size: 15px; font-weight: 600; color: #2c3e50;
+    line-height: 1.5; margin-bottom: 3px;
+    text-decoration: none; display: block;
   }
-  .pub-paper-title:hover { color: #2563eb; }
-
-  .pub-paper-authors {
-    font-size: 13px;
-    color: #64748b;
-    line-height: 1.55;
-  }
-  .pub-paper-authors b {
-    color: #0f172a;
-    font-weight: 700;
-  }
-
+  .pub-paper-title:hover { color: #6c3b4e; }
+  .pub-paper-authors { font-size: 13px; color: #5a6c7d; line-height: 1.55; }
+  .pub-paper-authors b { color: #2c3e50; font-weight: 700; }
   .pub-venue-tag {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    padding: 2px 8px;
-    border-radius: 3px;
-    margin-left: 8px;
-    vertical-align: middle;
+    display: inline-block; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.04em; padding: 1px 7px; border-radius: 3px;
+    margin-left: 8px; vertical-align: middle; border: 1px solid transparent;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
   }
-  .pub-venue-tag.icann { background: #eff6ff; color: #2563eb; }
-  .pub-venue-tag.cbase { background: #f0fdf4; color: #059669; }
+  .pub-venue-tag.icann { background: #f6f2f4; color: #6c3b4e; border-color: #e4d8dc; }
+  .pub-venue-tag.cbase { background: #f2f4f3; color: #4a6b5c; border-color: #d4e0da; }
 
   /* ---- Blog CTA ---- */
   .blog-cta {
-    background: #fff;
-    border-radius: 10px;
-    padding: 24px 32px;
-    text-align: center;
-    border: 1px solid #f1f5f9;
+    background: #f8f6f4; border-radius: 6px; padding: 24px 32px;
+    text-align: center; border: 1px solid #e8e4e0;
   }
-  .blog-cta p { color: #64748b; margin-bottom: 14px; font-size: 14px; }
+  .blog-cta p { color: #5a6c7d; margin-bottom: 14px; font-size: 14px; }
 
   /* ---- Mobile ---- */
   @media (max-width: 640px) {
-    .profile-card {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 16px;
-      padding: 24px 18px;
-    }
-    .profile-photo img { width: 100px; height: 100px; }
+    .profile-card { flex-direction: column; align-items: center; text-align: center; gap: 16px; padding: 24px 18px; }
+    .profile-photo img { width: 90px; height: 90px; }
     .profile-links { justify-content: center; }
-    .pub-entry { flex-direction: column; gap: 8px; }
+    .pub-entry { flex-direction: column; gap: 4px; }
     .pub-index { text-align: left; }
   }
 </style>
@@ -196,7 +109,7 @@
 <main class="site-main">
 <div class="container">
 
-<!-- ===== Profile ===== -->
+<!-- Profile -->
 <div class="profile-card">
   <div class="profile-photo">
     <img src="ykf.jpg" alt="Kaifang Yao">
@@ -219,7 +132,7 @@
   </div>
 </div>
 
-<!-- ===== Publications ===== -->
+<!-- Publications -->
 <h2 class="sec-title">Publications</h2>
 <div class="pub-list">
 
@@ -251,7 +164,7 @@
 
 </div>
 
-<!-- ===== Blog ===== -->
+<!-- Blog -->
 <div class="blog-cta">
   <p>学习笔记、课程资料与论文阅读整理</p>
   <a href="posts.html" class="button">Browse All Posts</a>
