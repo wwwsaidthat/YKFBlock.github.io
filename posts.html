@@ -6,19 +6,6 @@
 <title>文章列表 - 我的个人博客</title>
 <link rel="stylesheet" href="styles.css">
 <style>
-/* 补充样式：嵌套的 post-group 内边距 */
-.post-group .post-group {
-  margin: 8px 0 8px 16px;
-}
-.post-group .post-group .post-group {
-  margin-left: 16px;
-}
-.post-group .post-list {
-  padding: 0 20px 20px;
-}
-.post-group .post-group .post-list {
-  padding: 0 16px 16px;
-}
 /* 空状态 */
 .empty-state {
   text-align: center;
@@ -168,32 +155,26 @@
 
   // ---- 渲染 ----
   function createPostItem(post) {
-    var article = document.createElement('article');
-    article.className = 'post-item';
-    article.setAttribute('data-search-text', (post.title + ' ' + post.excerpt + ' ' + post.file).toLowerCase());
+    var row = document.createElement('div');
+    row.className = 'post-item';
+    row.setAttribute('data-search-text', (post.title + ' ' + post.file).toLowerCase());
 
     var href = post.viewer + '?file=' + encodePath(post.file);
 
     var link = document.createElement('a');
     link.className = 'post-title-link';
     link.href = href;
+    link.title = post.title;
     link.textContent = post.title;
 
-    var meta = document.createElement('div');
+    var meta = document.createElement('span');
     meta.className = 'post-meta';
     meta.textContent = post.date;
 
-    article.appendChild(link);
-    article.appendChild(meta);
+    row.appendChild(link);
+    row.appendChild(meta);
 
-    if (post.excerpt) {
-      var excerpt = document.createElement('p');
-      excerpt.className = 'post-excerpt';
-      excerpt.textContent = post.excerpt;
-      article.appendChild(excerpt);
-    }
-
-    return article;
+    return row;
   }
 
   function createPostList(posts) {
@@ -208,13 +189,23 @@
   function createGroup(name, posts, children, depth) {
     var details = document.createElement('details');
     details.className = 'post-group';
-    if (depth === 0) {
-      details.open = true; // 顶级分组默认展开
+    if (depth <= 1) {
+      details.open = true; // 前两级默认展开
     }
+    details.setAttribute('data-depth', depth);
 
     var summary = document.createElement('summary');
     var count = countAllPosts(posts, children);
-    summary.textContent = name + ' (' + count + ')';
+
+    var label = document.createElement('span');
+    label.textContent = name;
+    summary.appendChild(label);
+
+    var badge = document.createElement('span');
+    badge.className = 'tree-count';
+    badge.textContent = count;
+    summary.appendChild(badge);
+
     details.appendChild(summary);
 
     // 先添加当前层级的文章
@@ -224,7 +215,6 @@
 
     // 递归添加子分组
     if (children && Object.keys(children).length > 0) {
-      // 对子分组按名称排序
       var childKeys = Object.keys(children).sort(function(a, b) {
         var an = getLeadingNumber(a);
         var bn = getLeadingNumber(b);

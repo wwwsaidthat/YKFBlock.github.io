@@ -3,53 +3,272 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>姚凯方的个人博客</title>
+<title>Kaifang Yao — Homepage</title>
 <link rel="stylesheet" href="styles.css">
+<style>
+  /* ---- Profile ---- */
+  .profile-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 36px;
+    background: #fff;
+    border-radius: 14px;
+    padding: 36px 40px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    margin-bottom: 36px;
+  }
+
+  .profile-photo { flex: 0 0 auto; }
+
+  .profile-photo img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #f1f5f9;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .profile-info { flex: 1 1 0; min-width: 0; }
+
+  .profile-name {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+
+  .profile-name-en {
+    font-size: 15px;
+    color: #94a3b8;
+    margin-bottom: 10px;
+  }
+
+  .profile-affiliation {
+    font-size: 14px;
+    color: #475569;
+    line-height: 1.75;
+  }
+  .profile-affiliation strong { color: #1e293b; }
+
+  .profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .profile-link {
+    font-size: 13px;
+    padding: 5px 14px;
+    border-radius: 6px;
+    background: #f8fafc;
+    color: #475569;
+    text-decoration: none;
+    border: 1px solid #e2e8f0;
+    transition: all 0.15s;
+  }
+  .profile-link:hover { border-color: #2563eb; color: #2563eb; background: #eff6ff; }
+
+  /* ---- Section title ---- */
+  .sec-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 20px;
+  }
+
+  /* ---- Publications ---- */
+  .pub-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+
+  .pub-entry {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 16px 22px;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .pub-entry:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    transform: translateY(-1px);
+  }
+
+  .pub-index {
+    flex: 0 0 auto;
+    width: 26px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2563eb;
+    text-align: right;
+  }
+
+  .pub-body {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .pub-paper-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    line-height: 1.5;
+    margin-bottom: 4px;
+    text-decoration: none;
+    display: block;
+  }
+  .pub-paper-title:hover { color: #2563eb; }
+
+  .pub-paper-authors {
+    font-size: 13px;
+    color: #64748b;
+    line-height: 1.55;
+  }
+  .pub-paper-authors b {
+    color: #0f172a;
+    font-weight: 700;
+  }
+
+  .pub-venue-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .pub-venue-tag.icann { background: #eff6ff; color: #2563eb; }
+  .pub-venue-tag.cbase { background: #f0fdf4; color: #059669; }
+
+  /* ---- Blog CTA ---- */
+  .blog-cta {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px 32px;
+    text-align: center;
+    border: 1px solid #f1f5f9;
+  }
+  .blog-cta p { color: #64748b; margin-bottom: 14px; font-size: 14px; }
+
+  /* ---- Mobile ---- */
+  @media (max-width: 640px) {
+    .profile-card {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+      padding: 24px 18px;
+    }
+    .profile-photo img { width: 100px; height: 100px; }
+    .profile-links { justify-content: center; }
+    .pub-entry { flex-direction: column; gap: 8px; }
+    .pub-index { text-align: left; }
+  }
+</style>
 </head>
 <body class="home">
+
 <header class="site-header">
 <div class="container header-inner">
-<div class="logo">姚凯方的博客</div>
+<div class="logo">Kaifang Yao</div>
 <nav class="nav">
-<a href="index.html" class="nav-link active">首页</a>
-<a href="posts.html" class="nav-link">文章</a>
-<a href="about.html" class="nav-link">关于</a>
+<a href="index.html" class="nav-link active">Home</a>
+<a href="posts.html" class="nav-link">Posts</a>
+<a href="about.html" class="nav-link">About</a>
 </nav>
 </div>
 </header>
+
 <main class="site-main">
-<section class="hero">
-<div class="container hero-inner">
-<div class="hero-text">
-<h1 class="hero-title">欢迎来到姚凯方的个人博客</h1>
-<p class="hero-subtitle">在这里记录学习、生活与思考</p>
-<div style="margin-top: 24px;">
-  <p class="hero-subtitle" style="margin-bottom: 8px;">文章名：关于口味预测的 RAG 论文</p>
-  <p class="hero-subtitle" style="margin-bottom: 0;">作者：<strong>姚凯方</strong></p>
-</div>
-</div>
-<div class="hero-photo">
-<img src="ykf.jpg" alt="姚凯方的照片" class="hero-photo-img">
-</div>
-</div>
-</section>
-<section class="section">
 <div class="container">
-<h2 class="section-title" style="color: white;">文章与资料</h2>
-<p class="post-excerpt" style="color: white;">我会把学习笔记、资料和博客文章整理成一个个页面放在文章列表里，方便查阅。</p>
-<a href="posts.html" class="button">进入文章列表</a>
+
+<!-- ===== Profile ===== -->
+<div class="profile-card">
+  <div class="profile-photo">
+    <img src="ykf.jpg" alt="Kaifang Yao">
+  </div>
+  <div class="profile-info">
+    <h1 class="profile-name">姚凯方</h1>
+    <p class="profile-name-en">Kaifang Yao</p>
+    <p class="profile-affiliation">
+      Undergraduate · <strong>Software Institute, Nanjing University</strong><br>
+      State Key Laboratory for Novel Software Technology<br>
+      Nanjing, China
+    </p>
+    <div class="profile-links">
+      <a href="mailto:978887223@qq.com" class="profile-link">✉️ 978887223@qq.com</a>
+      <a href="mailto:yaokaifang52@gmail.com" class="profile-link">✉️ yaokaifang52@gmail.com</a>
+      <a href="mailto:231250097@smail.nju.edu.cn" class="profile-link">✉️ 231250097@smail.nju.edu.cn</a>
+      <a href="about.html" class="profile-link">🏆 Honors &amp; Awards</a>
+      <a href="posts.html" class="profile-link">📚 Blog Posts</a>
+    </div>
+  </div>
 </div>
-</section>
+
+<!-- ===== Publications ===== -->
+<h2 class="sec-title">Publications</h2>
+<div class="pub-list">
+
+  <div class="pub-entry">
+    <span class="pub-index">[1]</span>
+    <div class="pub-body">
+      <a class="pub-paper-title" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E6%88%90%E6%9E%9C/ICANN2026/Paper.pdf">
+        Towards Efficiency and Accuracy: Learning One Compact View for Multiplex Graph Neural Networks via Structure-aware Augmentation
+      </a>
+      <div class="pub-paper-authors">
+        Renjie Hua, <b>Kaifang Yao</b>, Yunhui Liu, Chuan Ren, Jianhua Zhao, Tieke He
+        <span class="pub-venue-tag icann">ICANN 2026</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="pub-entry">
+    <span class="pub-index">[2]</span>
+    <div class="pub-body">
+      <a class="pub-paper-title" href="pdf-viewer.html?file=posts/%E7%A7%91%E7%A0%94/%E6%88%90%E6%9E%9C/CBASE2025/6ed443f5-28a4-4c30-9fc4-4b8ca6b29a18.pdf">
+        LLM Dual-Agent for Taste Preference Prediction
+      </a>
+      <div class="pub-paper-authors">
+        <b>Kaifang Yao</b>
+        <span class="pub-venue-tag cbase">CBASE 2025</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== Blog ===== -->
+<div class="blog-cta">
+  <p>学习笔记、课程资料与论文阅读整理</p>
+  <a href="posts.html" class="button">Browse All Posts</a>
+</div>
+
+</div>
 </main>
+
 <footer class="site-footer">
 <div class="container footer-inner">
-<span>© <span id="year"></span> 我的个人博客</span>
+<span>&copy; <span id="year"></span> Kaifang Yao</span>
 <span>Powered by GitHub Pages</span>
 </div>
 </footer>
+
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
-
