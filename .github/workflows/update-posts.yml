@@ -1,0 +1,49 @@
+name: 自动更新文章数据
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'posts/**'                 # posts 目录下文件变化时触发
+      - 'generate-posts-data.js'  # 生成器脚本变化时也触发
+  workflow_dispatch:        # 允许手动触发
+
+# 防止多个流水线同时运行造成冲突
+concurrency:
+  group: update-posts-data
+  cancel-in-progress: true
+
+jobs:
+  update-posts-data:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write        # 允许推送提交
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 生成 posts-data.js
+        run: node generate-posts-data.js
+
+      - name: 检查是否有变更
+        id: check
+        run: |
+          if git diff --quiet posts-data.js; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "posts-data.js 无变化，跳过提交"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "检测到 posts-data.js 有更新"
+          fi
+
+      - name: 提交并推送
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add posts-data.js
+          git commit -m "自动更新 posts-data.js [skip ci]"
+          git push

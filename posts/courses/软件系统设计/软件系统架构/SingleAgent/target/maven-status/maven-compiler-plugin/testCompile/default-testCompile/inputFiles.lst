@@ -1,0 +1,9 @@
+E:\Homework\software-architecture\SingleAgent\src\test\java\com\course\singleagent\config\OpenAiChatConfigurationTest.java
+E:\Homework\software-architecture\SingleAgent\src\test\java\com\course\singleagent\knowledge\AssignmentKnowledgeBaseTest.java
+E:\Homework\software-architecture\SingleAgent\src\test\java\com\course\singleagent\prompt\PromptFactoryTest.java
+E:\Homework\software-architecture\SingleAgent\src\test\java\com\course\singleagent\service\ArtifactWriterTest.java
+E:\Homework\software-architecture\SingleAgent\src\test\java\com\course\singleagent\service\AssignmentExecutionServiceTest.java
+E:\Homework\software-architecture\SingleAgent\src\test\java\com\course\singleagent\service\ReportBuilderTest.java
+E:\Homework\software-architecture\SingleAgent\src\test\java\com\course\singleagent\service\SingleAgentRunnerTest.java
+E:\Homework\software-architecture\SingleAgent\src\test\java\com\course\singleagent\SingleAgentApplicationTests.java
+E:\Homework\software-architecture\SingleAgent\src\test\java\com\course\singleagent\web\RunControllerTest.java

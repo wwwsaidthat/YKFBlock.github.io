@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: singleagent
+  ai:
+    openai:
+      api-key: ${ARK_API_KEY:test-api-key}
+      base-url: ${ARK_BASE_URL:https://ark.cn-beijing.volces.com/api/v3}
+      chat:
+        base-url: ${ARK_BASE_URL:https://ark.cn-beijing.volces.com/api/v3}
+        completions-path: /chat/completions
+        options:
+          model: ${LLM_MODEL:deepseek-v4-pro-260425}
+          temperature: 0.2
+
+app:
+  model:
+    api-key: ${ARK_API_KEY:}
+    base-url: ${ARK_BASE_URL:https://ark.cn-beijing.volces.com/api/v3}
+    model-name: ${LLM_MODEL:deepseek-v4-pro-260425}
+  output:
+    root-dir: outputs

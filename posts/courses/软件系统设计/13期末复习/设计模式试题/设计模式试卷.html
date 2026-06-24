@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计模式C++试卷（两套·代码缩进修复版）</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", Arial, sans-serif;
+        }
+        body {
+            padding: 30px;
+            background-color: #f9f9f9;
+            line-height: 1.7;
+        }
+        .paper-box {
+            background: white;
+            padding: 25px;
+            margin-bottom: 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #c0392b;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        h2 {
+            color: #2980b9;
+            margin: 20px 0 15px;
+            font-size: 20px;
+            border-left: 4px solid #2980b9;
+            padding-left: 10px;
+        }
+        h3 {
+            color: #34495e;
+            margin: 15px 0 10px;
+            font-size: 16px;
+        }
+        .title-info {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 15px;
+            color: #666;
+        }
+        .question {
+            margin: 12px 0;
+            padding-left: 10px;
+        }
+        /* 核心修复：pre标签保留代码缩进/换行 */
+        .code-block {
+            background-color: #f5f5f5;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 10px 0;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 14px;
+            white-space: pre;
+        }
+        .class-diagram {
+            font-family: Consolas, monospace;
+            white-space: pre;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+        .answer-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        strong {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+<!-- A卷 -->
+<div class="paper-box">
+    <h1>设计模式综合试卷（A卷）</h1>
+    <div class="title-info">适用：计算机类设计模式考试 | 语言：C++ | 满分：100分</div>
+
+    <h2>一、分析题（3题，每题10分，共30分）</h2>
+    <div class="question">
+        <h3>1. 设计原则分析</h3>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+class Student {
+public:
+    void study() { cout << "学习" << endl; }
+    void writePaper() { cout << "写论文" << endl; }
+    void cook() { cout << "做饭" << endl; }
+    void drive() { cout << "开车" << endl; }
+};
+        </pre>
+        <p>问题：该类违背了哪条软件设计原则？请说明<strong>具体表现</strong>，并写出<strong>改进思路</strong>。</p>
+    </div>
+
+    <div class="question">
+        <h3>2. 代码缺陷与模式优化</h3>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+class Shape {
+public:
+    void draw(string type) {
+        if(type == "circle") cout << "画圆" << endl;
+        else if(type == "rect") cout << "画矩形" << endl;
+        else if(type == "triangle") cout << "画三角形" << endl;
+    }
+};
+        </pre>
+        <p>问题：代码在<strong>扩展新图形</strong>时存在什么严重问题？可以使用哪种设计模式优化？请写出<strong>详细优化思路</strong>。</p>
+    </div>
+
+    <div class="question">
+        <h3>3. 类图绘制</h3>
+        <p>请画出<strong>观察者模式</strong>标准类图，并标注四大核心角色：<strong>抽象主题、具体主题、抽象观察者、具体观察者</strong>。</p>
+    </div>
+
+    <h2>二、简答题（2题，每题15分，共30分）</h2>
+    <div class="question">
+        <h3>1. 单例模式场景</h3>
+        <p><strong>详细场景</strong>：系统的配置信息（如数据库地址、端口号）全局唯一，所有模块共用同一个配置对象，不允许创建多个实例，保证数据一致性。<br>
+        <strong>要求</strong>：使用<strong>懒汉式单例模式</strong>实现配置管理器，写出核心C++代码（无需客户端代码），需包含：私有构造、静态实例、获取实例方法。</p>
+    </div>
+    <div class="question">
+        <h3>2. 策略模式场景</h3>
+        <p><strong>详细场景</strong>：商场收银系统支持三种收费方式：①正常收费（无优惠）②打折收费（如8折）③满减收费（如满300减100），用户结账时可灵活切换收费算法。<br>
+        <strong>要求</strong>：使用<strong>策略模式</strong>实现，写出核心代码（无需客户端），需定义抽象策略接口、三种具体策略类、上下文类。</p>
+    </div>
+
+    <h2>三、设计题（2题，每题20分，共40分）</h2>
+    <div class="question">
+        <h3>1. 组合模式+迭代器：树形菜单系统</h3>
+        <p><strong>详细场景</strong>：软件的菜单分为<strong>菜单组</strong>（可包含子菜单/菜单项）和<strong>菜单项</strong>（最小单元，不可拆分），需要统一处理这两种对象，遍历打印完整菜单结构。<br>
+        <strong>明确要求</strong>：<br>
+        1. 定义抽象菜单组件类，包含显示方法；<br>
+        2. 菜单项（叶子节点）实现显示功能；<br>
+        3. 菜单组（容器节点）包含子组件列表，实现添加、遍历显示功能；<br>
+        4. 客户端：创建<strong>主菜单→文件菜单、编辑菜单</strong>多级结构，遍历打印整个菜单树。<br>
+        <strong>技术要求</strong>：组合模式+迭代器思想，完整可运行C++代码（含客户端）。</p>
+    </div>
+    <div class="question">
+        <h3>2. 建造者+代理：电脑装配与权限开机</h3>
+        <p><strong>详细场景</strong>：<br>
+        ① 电脑由CPU、显卡、内存组成，使用建造者模式组装<strong>高配电脑</strong>；<br>
+        ② 电脑开机需要权限验证，仅授权用户可以开机，使用代理模式控制开机权限。<br>
+        <strong>明确要求</strong>：<br>
+        1. 定义电脑产品类，包含配置属性和开机方法；<br>
+        2. 定义抽象建造者、高配电脑具体建造者；<br>
+        3. 定义代理类，实现权限校验逻辑；<br>
+        4. 客户端：组装高配电脑，分别用<strong>授权/未授权</strong>代理尝试开机。<br>
+        <strong>技术要求</strong>：建造者模式+代理模式，完整可运行C++代码（含客户端）。</p>
+    </div>
+
+    <div class="answer-box">
+        <h2>A卷 参考答案</h2>
+        <h3>一、分析题</h3>
+        <p><strong>1.</strong> 违背：单一职责原则<br>
+        表现：Student 同时承担学习、论文、做饭、驾驶等无关职责，一个类有多个变化原因。<br>
+        改进：按职责拆分，如StudentStudy、Cooker、Driver等，各司其职。</p>
+        <p><strong>2.</strong> 问题：大量if-else，新增图形必须修改原类，<strong>违背开闭原则</strong><br>
+        适用模式：<strong>工厂方法模式 / 简单工厂模式</strong><br>
+        思路：抽象Shape接口，各图形为子类；工厂根据类型创建对象，扩展只增子类不改原代码。</p>
+        <p><strong>3.</strong> 观察者模式类图</p>
+        <div class="class-diagram">
++----------------+        +------------------+
+|  Subject       |<-------| Observer         |
++----------------+        +------------------+
+| +attach()      |        | +update()        |
+| +detach()      |        +------------------+
+| +notify()      |               ^
++----------------+               |
+       ^                  +---------------+
+       |                  |ConcreteObserver|
++-----------------+       +---------------+
+|ConcreteSubject  |
+| +setState()     |
++-----------------+
+        </div>
+
+        <h3>二、简答题</h3>
+        <p><strong>1. 单例模式（懒汉式）</strong></p>
+        <pre class="code-block">
+class Config {
+private:
+    static Config* instance;
+    Config() {}
+    Config(const Config&) = delete;
+    Config& operator=(const Config&) = delete;
+public:
+    static Config* getInstance() {
+        if(instance == nullptr)
+            instance = new Config();
+        return instance;
+    }
+    void showConfig() {
+        cout << "全局唯一配置" << endl;
+    }
+};
+Config* Config::instance = nullptr;
+        </pre>
+
+        <p><strong>2. 策略模式</strong></p>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+// 抽象策略
+class CashStrategy {
+public:
+    virtual double acceptCash(double money) = 0;
+    virtual ~CashStrategy() = default;
+};
+// 正常收费
+class NormalCash : public CashStrategy {
+public:
+    double acceptCash(double money) override {
+        return money;
+    }
+};
+// 打折
+class RebateCash : public CashStrategy {
+private:
+    double rebate;
+public:
+    RebateCash(double r) : rebate(r) {}
+    double acceptCash(double money) override {
+        return money * rebate;
+    }
+};
+// 上下文
+class CashContext {
+private:
+    CashStrategy* strategy;
+public:
+    CashContext(CashStrategy* s) : strategy(s) {}
+    double getResult(double money) {
+        return strategy->acceptCash(money);
+    }
+    ~CashContext() { delete strategy; }
+};
+        </pre>
+
+        <h3>三、设计题</h3>
+        <p><strong>1. 组合模式（菜单系统）</strong></p>
+        <pre class="code-block">
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+class MenuComponent {
+protected:
+    string name;
+public:
+    MenuComponent(string n) : name(n) {}
+    virtual void add(MenuComponent*) {}
+    virtual void display(int depth) = 0;
+    virtual ~MenuComponent() = default;
+};
+// 菜单项（叶子）
+class MenuItem : public MenuComponent {
+public:
+    MenuItem(string n) : MenuComponent(n) {}
+    void display(int depth) override {
+        cout << string(depth, '-') << name << endl;
+    }
+};
+// 菜单（容器）
+class Menu : public MenuComponent {
+private:
+    vector<MenuComponent*> vec;
+public:
+    Menu(string n) : MenuComponent(n) {}
+    void add(MenuComponent* m) override {
+        vec.push_back(m);
+    }
+    void display(int depth) override {
+        cout << string(depth, '-') << name << endl;
+        for(auto c : vec)
+            c->display(depth + 2);
+    }
+    ~Menu() {
+        for(auto c : vec) delete c;
+    }
+};
+// 客户端
+int main() {
+    Menu* root = new Menu("主菜单");
+    Menu* file = new Menu("文件");
+    file->add(new MenuItem("新建"));
+    file->add(new MenuItem("打开"));
+    Menu* edit = new Menu("编辑");
+    edit->add(new MenuItem("复制"));
+    edit->add(new MenuItem("粘贴"));
+    root->add(file);
+    root->add(edit);
+    root->display(0);
+    delete root;
+    return 0;
+}
+        </pre>
+
+        <p><strong>2. 建造者+代理（电脑+权限）</strong></p>
+        <pre class="code-block">
+#include <iostream>
+#include <string>
+using namespace std;
+class Computer {
+public:
+    string cpu, gpu, mem;
+    void show() {
+        cout << cpu << "|" << gpu << "|" << mem << endl;
+    }
+    void powerOn() { cout << "电脑开机" << endl; }
+};
+class Builder {
+protected:
+    Computer* c;
+public:
+    Builder() { c = new Computer; }
+    virtual void buildCPU() = 0;
+    virtual void buildGPU() = 0;
+    virtual void buildMem() = 0;
+    Computer* get() { return c; }
+    virtual ~Builder() { delete c; }
+};
+class HighBuilder : public Builder {
+public:
+    void buildCPU() override { c->cpu = "i9"; }
+    void buildGPU() override { c->gpu = "4090"; }
+    void buildMem() override { c->mem = "64G"; }
+};
+// 代理权限
+class PowerProxy {
+private:
+    Computer* comp;
+    bool auth;
+public:
+    PowerProxy(Computer* c, bool a) : comp(c), auth(a) {}
+    void powerOn() {
+        if(auth) {
+            comp->powerOn();
+        } else {
+            cout << "无权限" << endl;
+        }
+    }
+};
+// 客户端
+int main() {
+    HighBuilder b;
+    b.buildCPU(); b.buildGPU(); b.buildMem();
+    Computer* pc = b.get();
+    pc->show();
+    PowerProxy p1(pc, true);
+    p1.powerOn();
+    PowerProxy p2(pc, false);
+    p2.powerOn();
+    return 0;
+}
+        </pre>
+    </div>
+</div>
+
+<!-- B卷 -->
+<div class="paper-box">
+    <h1>设计模式综合试卷（B卷）</h1>
+    <div class="title-info">适用：计算机类设计模式考试 | 语言：C++ | 满分：100分</div>
+
+    <h2>一、分析题（3题，每题10分，共30分）</h2>
+    <div class="question">
+        <h3>1. 设计原则分析</h3>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+class Car {
+public:
+    void run() { cout << "行驶" << endl; }
+    void repair() { cout << "维修" << endl; }
+    void sell() { cout << "销售" << endl; }
+    void wash() { cout << "洗车" << endl; }
+};
+        </pre>
+        <p>问题：该类违背了哪条软件设计原则？说明<strong>具体原因</strong>，并给出<strong>改进方案</strong>。</p>
+    </div>
+
+    <div class="question">
+        <h3>2. 代码缺陷与模式改进</h3>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+class Hero {
+public:
+    void skill(int type) {
+        if(type==1) cout<<"普攻"<<endl;
+        else if(type==2) cout<<"技能1"<<endl;
+        else if(type==3) cout<<"大招"<<endl;
+    }
+};
+        </pre>
+        <p>问题：新增英雄技能时，代码会出现什么问题？适合用哪种设计模式优化？简述<strong>具体实现思路</strong>。</p>
+    </div>
+
+    <div class="question">
+        <h3>3. 类图绘制</h3>
+        <p>请画出<strong>装饰器模式</strong>标准类图，并标注四大核心角色：<strong>抽象组件、具体组件、抽象装饰器、具体装饰器</strong>。</p>
+    </div>
+
+    <h2>二、简答题（2题，每题15分，共30分）</h2>
+    <div class="question">
+        <h3>1. 原型模式场景</h3>
+        <p><strong>详细场景</strong>：游戏中需要创建大量相同的角色对象（如士兵），仅需修改血量/名称属性，避免频繁new创建对象，提升效率。<br>
+        <strong>要求</strong>：使用<strong>原型模式</strong>实现角色克隆功能，写出核心代码（无需客户端），包含抽象原型类、具体角色类、克隆方法。</p>
+    </div>
+    <div class="question">
+        <h3>2. 命令模式场景</h3>
+        <p><strong>详细场景</strong>：遥控器控制家电（灯、空调），将<strong>按键请求</strong>与<strong>设备执行</strong>解耦，按下按键就触发设备操作。<br>
+        <strong>要求</strong>：使用<strong>命令模式</strong>实现，写出核心代码（无需客户端），包含接收者（灯）、抽象命令、具体开灯命令。</p>
+    </div>
+
+    <h2>三、设计题（2题，每题20分，共40分）</h2>
+    <div class="question">
+        <h3>1. 装饰器+工厂方法：日志系统</h3>
+        <p><strong>详细场景</strong>：<br>
+        ① 基础日志：控制台日志、文件日志；<br>
+        ② 增强功能：日志可动态添加<strong>加密、压缩</strong>功能，自由组合；<br>
+        ③ 统一创建：通过工厂创建日志对象，隐藏创建细节。<br>
+        <strong>明确要求</strong>：<br>
+        1. 定义抽象日志接口，实现控制台日志具体类；<br>
+        2. 定义抽象装饰器、加密/压缩具体装饰器；<br>
+        3. 定义日志工厂类，创建日志对象；<br>
+        4. 客户端：创建控制台日志，叠加<strong>加密+压缩</strong>功能，输出日志。<br>
+        <strong>技术要求</strong>：装饰器模式+工厂方法模式，完整可运行C++代码（含客户端）。</p>
+    </div>
+    <div class="question">
+        <h3>2. 状态模式+单例：任务调度系统</h3>
+        <p><strong>详细场景</strong>：<br>
+        ① 任务有三种状态：待执行、运行中、已完成，不同状态执行不同行为；<br>
+        ② 调度中心全局唯一，只能有一个实例。<br>
+        <strong>明确要求</strong>：<br>
+        1. 单例模式实现全局唯一任务调度器；<br>
+        2. 状态模式实现任务状态切换与行为执行；<br>
+        3. 定义抽象状态类、三种具体状态类；<br>
+        4. 客户端：获取调度器实例，切换任务状态并执行行为。<br>
+        <strong>技术要求</strong>：状态模式+单例模式，完整可运行C++代码（含客户端）。</p>
+    </div>
+
+    <div class="answer-box">
+        <h2>B卷 参考答案</h2>
+        <h3>一、分析题</h3>
+        <p><strong>1.</strong> 违背：单一职责原则<br>
+        原因：Car同时包含行驶、维修、销售、清洗，职责混乱。<br>
+        改进：拆分为CarRun、CarRepair、CarSale、CarWash。</p>
+        <p><strong>2.</strong> 问题：if-else臃肿，违背开闭原则<br>
+        适用模式：<strong>状态模式 / 策略模式 / 命令模式</strong><br>
+        思路：抽象技能接口，每个技能独立子类，新增技能只加子类，不改原类。</p>
+        <p><strong>3.</strong> 装饰器模式类图</p>
+        <div class="class-diagram">
++-------------+       +-------------+
+| Component   |<------| Decorator   |
++-------------+       +-------------+
+|+operation() |       |-Component*  |
++-------------+       +-------------+
+      ^                     ^
+      |                     |
++-------------+       +-------------+
+|ConcreteComp |       |ConcreteDecor|
++-------------+       +-------------+
+|+operation() |       |+operation() |
++-------------+       +-------------+
+        </div>
+
+        <h3>二、简答题</h3>
+        <p><strong>1. 原型模式</strong></p>
+        <pre class="code-block">
+#include <iostream>
+#include <string>
+using namespace std;
+class Prototype {
+public:
+    virtual Prototype* clone() = 0;
+    virtual void show() = 0;
+    virtual ~Prototype() = default;
+};
+class Role : public Prototype {
+private:
+    string name;
+    int hp;
+public:
+    Role(string n, int h) : name(n), hp(h) {}
+    Prototype* clone() override {
+        return new Role(*this);
+    }
+    void show() override {
+        cout << name << " HP:" << hp << endl;
+    }
+    void setHp(int h) { hp = h; }
+};
+        </pre>
+
+        <p><strong>2. 命令模式</strong></p>
+        <pre class="code-block">
+#include <iostream>
+using namespace std;
+class Light {
+public:
+    void on() { cout << "灯开" << endl; }
+    void off() { cout << "灯关" << endl; }
+};
+class Command {
+public:
+    virtual void execute() = 0;
+    virtual ~Command() = default;
+};
+class LightOn : public Command {
+private:
+    Light* l;
+public:
+    LightOn(Light* li) : l(li) {}
+    void execute() override { l->on(); }
+};
+        </pre>
+
+        <h3>三、设计题</h3>
+        <p><strong>1. 装饰器+工厂方法（日志系统）</strong></p>
+        <pre class="code-block">
+#include <iostream>
+#include <string>
+using namespace std;
+// 日志接口
+class Logger {
+public:
+    virtual void log(string s) = 0;
+    virtual ~Logger() = default;
+};
+// 控制台日志
+class ConsoleLog : public Logger {
+public:
+    void log(string s) override {
+        cout << "控制台：" << s << endl;
+    }
+};
+// 装饰器基类
+class LogDecorator : public Logger {
+protected:
+    Logger* log;
+public:
+    LogDecorator(Logger* l) : log(l) {}
+};
+// 加密装饰
+class EncryptDecor : public LogDecorator {
+public:
+    EncryptDecor(Logger* l) : LogDecorator(l) {}
+    void log(string s) override {
+        log->log("加密:" + s);
+    }
+};
+// 压缩装饰
+class ZipDecor : public LogDecorator {
+public:
+    ZipDecor(Logger* l) : LogDecorator(l) {}
+    void log(string s) override {
+        log->log("压缩:" + s);
+    }
+};
+// 工厂
+class ConsoleFactory {
+public:
+    Logger* create() { return new ConsoleLog; }
+};
+// 客户端
+int main() {
+    ConsoleFactory f;
+    Logger* l = new ZipDecor(new EncryptDecor(f.create()));
+    l->log("hello");
+    delete l;
+    return 0;
+}
+        </pre>
+
+        <p><strong>2. 状态模式+单例（任务调度）</strong></p>
+        <pre class="code-block">
+#include <iostream>
+#include <string>
+using namespace std;
+class Task;
+class State {
+public:
+    virtual void handle(Task* t) = 0;
+    virtual ~State() = default;
+};
+class Task {
+private:
+    State* state;
+    static Task* ins;
+    Task() : state(nullptr) {}
+public:
+    static Task* get() {
+        if(!ins) ins = new Task;
+        return ins;
+    }
+    void setState(State* s) { state = s; }
+    void doJob() { state->handle(this); }
+};
+Task* Task::ins = nullptr;
+// 待执行
+class WaitState : public State {
+public:
+    void handle(Task* t) override {
+        cout << "任务待执行" << endl;
+    }
+};
+// 运行中
+class RunState : public State {
+public:
+    void handle(Task* t) override {
+        cout << "任务运行中" << endl;
+    }
+};
+// 客户端
+int main() {
+    Task* t = Task::get();
+    t->setState(new WaitState);
+    t->doJob();
+    t->setState(new RunState);
+    t->doJob();
+    return 0;
+}
+        </pre>
+    </div>
+</div>
+
+</body>
+</html>
