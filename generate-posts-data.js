@@ -42,6 +42,7 @@ const SKIP_DIRS = new Set([
   'diagrams', 'json', 'logs', 'reports', 'config', 'domain',
   'knowledge', 'prompt', 'service', 'web', 'assets', 'static',
   'resources',
+  'others',  // 个人资料，不在网站上展示
 ]);
 
 // 可以跳过但可能是有效课程内容的子目录
